@@ -12,7 +12,7 @@ resource "google_compute_subnetwork" "mc_subnet" {
 }
 
 resource "google_compute_firewall" "mc_firewall" {
-  project = va.project_id
+  project = var.project_id
   name = "mc-allow-minecraft"
   network = google_compute_network.mc_vpc.id
   allow {
@@ -49,6 +49,15 @@ resource "google_compute_instance" "mc_server" {
   machine_type = "e2-standard-2"
   zone = var.zone
   tags = ["mc-server"]
+  metadata_startup_script = templatefile(
+    "${path.module}/templates/startup.sh.tftpl",
+    {
+      packwiz_url = var.packwiz_url
+    }
+  )
+  metadata = {
+    shutdown-script = templatefile("${path.module}/templates/shutdown.sh.tftpl", {})
+  }
 
   boot_disk {
     initialize_params {

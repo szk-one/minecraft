@@ -8,3 +8,8 @@ variable "mc_allowed_source_ranges" {
   # 本番では自宅回線のIPだけに絞る
   default = ["0.0.0.0/0"]
 }
+
+variable "packwiz_url" {
+  description = "公開された packwiz pack.toml の URL (例: GitHub Pages)"
+  type        = string
+}

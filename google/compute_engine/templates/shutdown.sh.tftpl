@@ -1,0 +1,38 @@
+#!/bin/bash
+set -euxo pipefail
+
+log() {
+  echo "$(date -Iseconds) $*"
+}
+
+COMPOSE_FILE="/mnt/minecraft/compose/docker-compose.yml"
+
+log "Starting shutdown script"
+
+if [ ! -f "${COMPOSE_FILE}" ]; then
+  log "Compose file ${COMPOSE_FILE} not found; skipping"
+  exit 0
+fi
+
+if ! command -v docker >/dev/null 2>&1; then
+  log "docker command not available; skipping"
+  exit 0
+fi
+
+if ! docker info >/dev/null 2>&1; then
+  log "Docker daemon not responding; skipping"
+  exit 0
+fi
+
+if docker compose version >/dev/null 2>&1; then
+  log "Stopping minecraft stack via docker compose"
+  docker compose -f "${COMPOSE_FILE}" stop --timeout 120 || true
+else
+  CONTAINER_NAME="minecraft-server"
+  if docker ps --filter "name=${CONTAINER_NAME}" --format "{{.Names}}" | grep -qx "${CONTAINER_NAME}"; then
+    log "docker compose unavailable; stopping container ${CONTAINER_NAME}"
+    docker stop --time 120 "${CONTAINER_NAME}" || true
+  fi
+fi
+
+log "Shutdown script completed"
