@@ -12,4 +12,5 @@ variable "mc_allowed_source_ranges" {
 variable "packwiz_url" {
   description = "公開された packwiz pack.toml の URL (例: GitHub Pages)"
   type        = string
+  default = "https://szk-one.github.io/minecraft/pack.toml"
 }
