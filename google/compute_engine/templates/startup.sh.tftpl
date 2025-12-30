@@ -7,46 +7,46 @@ log() {
 
 DATA_DISK="/dev/disk/by-id/google-mc-data-disk"
 MOUNT_POINT="/mnt/minecraft"
-COMPOSE_DIR="${MOUNT_POINT}/compose"
-SERVER_DIR="${MOUNT_POINT}/server"
-COMPOSE_FILE="${COMPOSE_DIR}/docker-compose.yml"
-PACKWIZ_URL="${packwiz_url}"
+COMPOSE_DIR="$${MOUNT_POINT}/compose"
+SERVER_DIR="$${MOUNT_POINT}/server"
+COMPOSE_FILE="$${COMPOSE_DIR}/docker-compose.yml"
+PACKWIZ_URL="$${packwiz_url}"
 
 log "Starting startup script"
 
-if [ -z "${PACKWIZ_URL}" ]; then
+if [ -z "$${PACKWIZ_URL}" ]; then
   log "PACKWIZ_URL is empty; ensure Terraform variable packwiz_url is set" >&2
   exit 1
 fi
 
 # Wait for the persistent disk to attach before proceeding.
 for _ in $(seq 1 12); do
-  if [ -e "${DATA_DISK}" ]; then
+  if [ -e "$${DATA_DISK}" ]; then
     break
   fi
-  log "Waiting for data disk ${DATA_DISK}"
+  log "Waiting for data disk $${DATA_DISK}"
   sleep 5
 done
 
-if [ ! -e "${DATA_DISK}" ]; then
-  log "Data disk ${DATA_DISK} not present" >&2
+if [ ! -e "$${DATA_DISK}" ]; then
+  log "Data disk $${DATA_DISK} not present" >&2
   exit 1
 fi
 
 # Format the disk if it has not been formatted yet.
-if ! blkid "${DATA_DISK}" >/dev/null 2>&1; then
-  log "Formatting ${DATA_DISK} as ext4"
-  mkfs.ext4 -F "${DATA_DISK}"
+if ! blkid "$${DATA_DISK}" >/dev/null 2>&1; then
+  log "Formatting $${DATA_DISK} as ext4"
+  mkfs.ext4 -F "$${DATA_DISK}"
 fi
 
-mkdir -p "${MOUNT_POINT}"
-if ! mountpoint -q "${MOUNT_POINT}"; then
-  log "Mounting ${DATA_DISK} to ${MOUNT_POINT}"
-  mount "${DATA_DISK}" "${MOUNT_POINT}"
+mkdir -p "$${MOUNT_POINT}"
+if ! mountpoint -q "$${MOUNT_POINT}"; then
+  log "Mounting $${DATA_DISK} to $${MOUNT_POINT}"
+  mount "$${DATA_DISK}" "$${MOUNT_POINT}"
 fi
 
-if ! grep -q "${DATA_DISK}" /etc/fstab; then
-  echo "${DATA_DISK} ${MOUNT_POINT} ext4 defaults 0 2" >> /etc/fstab
+if ! grep -q "$${DATA_DISK}" /etc/fstab; then
+  echo "$${DATA_DISK} $${MOUNT_POINT} ext4 defaults 0 2" >> /etc/fstab
 fi
 
 log "Installing Docker and prerequisites"
@@ -55,10 +55,10 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io docker-compose-plugi
 systemctl enable docker
 systemctl restart docker
 
-mkdir -p "${SERVER_DIR}" "${COMPOSE_DIR}"
-chown -R 1000:1000 "${SERVER_DIR}"
+mkdir -p "$${SERVER_DIR}" "$${COMPOSE_DIR}"
+chown -R 1000:1000 "$${SERVER_DIR}"
 
-cat <<EOF > "${COMPOSE_FILE}"
+cat <<EOF > "$${COMPOSE_FILE}"
 services:
   minecraft:
     container_name: minecraft-server
@@ -72,13 +72,13 @@ services:
       VERSION: "1.21.1"
       MEMORY: "4G"
       USE_PACKWIZ: "true"
-      PACKWIZ_URL: "${PACKWIZ_URL}"
+      PACKWIZ_URL: "$${PACKWIZ_URL}"
     volumes:
       - /mnt/minecraft/server:/data
 EOF
 
 log "Deploying Docker Compose stack"
-docker compose -f "${COMPOSE_FILE}" pull
+docker compose -f "$${COMPOSE_FILE}" pull
 log "Starting minecraft stack"
-docker compose -f "${COMPOSE_FILE}" up -d
+docker compose -f "$${COMPOSE_FILE}" up -d
 log "Startup script completed"
