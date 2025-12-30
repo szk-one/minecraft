@@ -10,7 +10,7 @@ MOUNT_POINT="/mnt/minecraft"
 COMPOSE_DIR="$${MOUNT_POINT}/compose"
 SERVER_DIR="$${MOUNT_POINT}/server"
 COMPOSE_FILE="$${COMPOSE_DIR}/docker-compose.yml"
-PACKWIZ_URL="$${packwiz_url}"
+PACKWIZ_URL="${packwiz_url}"
 
 log "Starting startup script"
 
@@ -49,9 +49,17 @@ if ! grep -q "$${DATA_DISK}" /etc/fstab; then
   echo "$${DATA_DISK} $${MOUNT_POINT} ext4 defaults 0 2" >> /etc/fstab
 fi
 
-log "Installing Docker and prerequisites"
+log "Configuring Docker apt repository"
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io docker-compose-plugin
+DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --yes --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod 0644 /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+
+log "Installing Docker engine"
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 systemctl enable docker
 systemctl restart docker
 
