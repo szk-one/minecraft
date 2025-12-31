@@ -6,13 +6,13 @@ hash = "978e8a9b6c30d3621523ae40550adbec25cb60b9a16cefbc8785f4039801a789"
 metafile = true
 
 [[files]]
-file = "mods/create/create-dreams-desires.pw.toml"
-hash = "275ca17c0de3d568298d54114278ee26af7de78a07b0acfb5f996ee27242352b"
+file = "mods/create/create-dreams-and-desires.pw.toml"
+hash = "df536f068808076c24dac917d86d581886ae5fb912672ec949d9c71a1a7a7fb7"
 metafile = true
 
 [[files]]
 file = "mods/create/create.pw.toml"
-hash = "eb7b4a7b28d4806c7bb7a0cf84f4dca90fc5d62317573e9100542bc484a48750"
+hash = "d6043c928c34ce1f4ada544a49193f95c281665cf88d4931e73370ea02870bed"
 metafile = true
 
 [[files]]
