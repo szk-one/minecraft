@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Minecraft Mod List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 1.5rem;
+      line-height: 1.4;
+    }
+    h1 {
+      margin: 0 0 1rem;
+      font-size: 1.75rem;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.85rem;
+      gap: 0.25rem;
+    }
+    input, select {
+      min-width: 10rem;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.95rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 0.5rem;
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.95rem;
+    }
+    th {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    tbody tr:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+    .summary {
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 720px) {
+      table {
+        font-size: 0.85rem;
+      }
+      th, td {
+        padding: 0.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Minecraft Mod List</h1>
+  <div class="summary" id="summary"></div>
+  <div class="filters">
+    <label>
+      Category
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+      </select>
+    </label>
+    <label>
+      Side
+      <select id="sideFilter">
+        <option value="">All Sides</option>
+      </select>
+    </label>
+    <label>
+      Source
+      <select id="sourceFilter">
+        <option value="">All Sources</option>
+      </select>
+    </label>
+    <label>
+      Search
+      <input type="search" id="searchFilter" placeholder="Name or file name">
+    </label>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Side</th>
+        <th>Source</th>
+        <th>Filename</th>
+        <th>Packwiz Path</th>
+      </tr>
+    </thead>
+    <tbody id="modsTable"></tbody>
+  </table>
+  <script>
+    let mods = [];
+    const categoryFilter = document.getElementById('categoryFilter');
+    const sideFilter = document.getElementById('sideFilter');
+    const sourceFilter = document.getElementById('sourceFilter');
+    const searchFilter = document.getElementById('searchFilter');
+    const modsTable = document.getElementById('modsTable');
+    const summary = document.getElementById('summary');
+
+    function resetSelect(select) {
+      while (select.options.length > 1) {
+        select.remove(1);
+      }
+    }
+
+    function populateFilters() {
+      resetSelect(categoryFilter);
+      resetSelect(sideFilter);
+      resetSelect(sourceFilter);
+
+      const categories = Array.from(new Set(mods.map(mod => mod.category))).sort();
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        categoryFilter.appendChild(option);
+      });
+
+      const sides = Array.from(new Set(mods.map(mod => mod.side))).sort();
+      sides.forEach(side => {
+        const option = document.createElement('option');
+        option.value = side;
+        option.textContent = side;
+        sideFilter.appendChild(option);
+      });
+
+      const sources = Array.from(new Set(mods.map(mod => mod.source || 'n/a'))).sort();
+      sources.forEach(source => {
+        const option = document.createElement('option');
+        option.value = source;
+        option.textContent = source;
+        sourceFilter.appendChild(option);
+      });
+    }
+
+    function render() {
+      const categoryValue = categoryFilter.value;
+      const sideValue = sideFilter.value;
+      const sourceValue = sourceFilter.value;
+      const searchValue = searchFilter.value.trim().toLowerCase();
+
+      const filtered = mods.filter(mod => {
+        const matchesCategory = !categoryValue || mod.category === categoryValue;
+        const matchesSide = !sideValue || mod.side === sideValue;
+        const matchesSource = !sourceValue || (mod.source || 'n/a') === sourceValue;
+        const matchesSearch = !searchValue || `${mod.name} ${mod.filename}`.toLowerCase().includes(searchValue);
+        return matchesCategory && matchesSide && matchesSource && matchesSearch;
+      });
+
+      modsTable.innerHTML = '';
+      filtered.forEach(mod => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${mod.name}</td>
+          <td>${mod.category}</td>
+          <td>${mod.side}</td>
+          <td>${mod.source || 'n/a'}</td>
+          <td>${mod.filename}</td>
+          <td>${mod.path}</td>
+        `;
+        modsTable.appendChild(row);
+      });
+
+      if (mods.length === 0) {
+        summary.textContent = 'No mods found';
+      } else {
+        summary.textContent = `${filtered.length} mods shown (out of ${mods.length})`;
+      }
+    }
+
+    async function loadMods() {
+      summary.textContent = 'Loading mod list...';
+      try {
+        const indexResponse = await fetch('index.toml', { cache: 'no-cache' });
+        if (!indexResponse.ok) {
+          throw new Error(`index.toml request failed with ${indexResponse.status}`);
+        }
+        const indexText = await indexResponse.text();
+        const fileMatches = Array.from(indexText.matchAll(/file\s*=\s*"([^\"]+\.pw\.toml)"/g));
+        const filePaths = fileMatches.map(match => match[1]);
+
+        const results = [];
+        for (const file of filePaths) {
+          try {
+            const response = await fetch(file, { cache: 'no-cache' });
+            if (!response.ok) {
+              throw new Error(`request failed with ${response.status}`);
+            }
+            const text = await response.text();
+            const parsed = parseModToml(text);
+            const relativePath = file.replace(/^mods\//, '');
+            const parts = relativePath.split('/');
+            const category = parts.length > 1 ? parts[0] : 'misc';
+            results.push({
+              category,
+              name: parsed.name,
+              filename: parsed.filename,
+              side: parsed.side,
+              source: parsed.source,
+              path: relativePath
+            });
+          } catch (error) {
+            console.error(`Failed to load ${file}`, error);
+          }
+        }
+
+        mods = results.sort((a, b) => {
+          const categoryCompare = a.category.localeCompare(b.category);
+          if (categoryCompare !== 0) {
+            return categoryCompare;
+          }
+          return a.name.localeCompare(b.name);
+        });
+
+        populateFilters();
+        render();
+
+        if (results.length === 0) {
+          summary.textContent = 'No mods resolved from Packwiz metadata';
+        }
+      } catch (error) {
+        console.error('Failed to load Packwiz metadata', error);
+        summary.textContent = 'Failed to load Packwiz metadata (see console for details)';
+      }
+    }
+
+    function parseModToml(text) {
+      // Simple regex extraction is enough because Packwiz mod files follow a predictable structure.
+      const name = matchValue(text, /^name\s*=\s*"([^"]+)"/m) || 'Unknown';
+      const filename = matchValue(text, /^filename\s*=\s*"([^"]+)"/m) || 'Unknown';
+      const side = matchValue(text, /^side\s*=\s*"([^"]+)"/m) || 'both';
+      let source = '';
+      if (/\[update\.modrinth\]/i.test(text)) {
+        source = 'modrinth';
+      } else if (/\[update\.curseforge\]/i.test(text)) {
+        source = 'curseforge';
+      }
+      return { name, filename, side, source };
+    }
+
+    function matchValue(text, regex) {
+      const match = text.match(regex);
+      return match ? match[1] : '';
+    }
+
+    loadMods();
+
+    categoryFilter.addEventListener('change', render);
+    sideFilter.addEventListener('change', render);
+    sourceFilter.addEventListener('change', render);
+    searchFilter.addEventListener('input', render);
+  </script>
+</body>
+</html>
