@@ -4,6 +4,14 @@
 
 | Mod | カテゴリ | 概要 | 対応バージョン |
 | --- | --- | --- | --- |
+| Create | create | 回転駆動と自動化装置を追加する大型テックModです。 | 6.0.8 (MC 1.21.1 / NeoForge) |
+| Create: Diesel Generators | create | Create向けディーゼル発電機と燃料インフラを拡張します。 | 1.3.8 (MC 1.21.1 / NeoForge) |
+| Create: Dreams n' Desires | create | 建築用の装飾・構造物でCreateの表現力を高めます。 | 2.2d-BETA (MC 1.21.1 / NeoForge) |
+| Sophisticated Core | item | Sophisticatedシリーズの共通機能と自動化APIを提供します。 | 1.3.99.1340 (MC 1.21.1 / NeoForge) |
+| Sophisticated Backpacks | item | 拡張可能なバックパックと搬送補助機能を追加します。 | 3.25.21.1475 (MC 1.21.1 / NeoForge) |
+| Sophisticated Storage | item | 高機能なチェストやタンクなどの大容量ストレージを導入します。 | 1.5.18.1405 (MC 1.21.1 / NeoForge) |
+| Sophisticated Backpacks Create Integration | item | Createの自動化とバックパック機能を連携させます。 | 0.1.5.29 (MC 1.21.1 / NeoForge) |
+| Sophisticated Storage Create Integration | item | Create機構でストレージ設備を制御できる連携を追加します。 | 0.1.13.54 (MC 1.21.1 / NeoForge) |
 | AllTheLeaks (Memory Leak Fix) | performance | メモリリークを軽減し長時間稼働時の安定性を向上させます。 | 1.1.4 (MC 1.21.1 / NeoForge) |
 | FerriteCore ((Neo)Forge) | performance | ブロック・モデル関連のメモリ使用量を削減して動作を軽くします。 | 7.0.2 (NeoForge) |
 | ModernFix | performance | ロード時間短縮やクラッシュ修正など多岐に渡る最適化を提供します。 | 5.25.1 (MC 1.21.1 / NeoForge) |

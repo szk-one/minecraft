@@ -1,6 +1,46 @@
 hash-format = "sha256"
 
 [[files]]
+file = "mods/create/create-diesel-generators.pw.toml"
+hash = "978e8a9b6c30d3621523ae40550adbec25cb60b9a16cefbc8785f4039801a789"
+metafile = true
+
+[[files]]
+file = "mods/create/create-dreams-desires.pw.toml"
+hash = "275ca17c0de3d568298d54114278ee26af7de78a07b0acfb5f996ee27242352b"
+metafile = true
+
+[[files]]
+file = "mods/create/create.pw.toml"
+hash = "eb7b4a7b28d4806c7bb7a0cf84f4dca90fc5d62317573e9100542bc484a48750"
+metafile = true
+
+[[files]]
+file = "mods/item/sophisticated-backpacks-create-integration.pw.toml"
+hash = "c966ea02eb59f31dcaeaebe9d96c9b232a2fb16d2fe971729350e567a4ff1bd7"
+metafile = true
+
+[[files]]
+file = "mods/item/sophisticated-backpacks.pw.toml"
+hash = "08ae2f34e6c0c1e27717ae13cbffe3e0f8efb1dd6b7480abf8cd75f87bde145c"
+metafile = true
+
+[[files]]
+file = "mods/item/sophisticated-core.pw.toml"
+hash = "6d755450264fa4a2afcaea38daa7be2a3f2fb3d0edad588ba7ed0cb4228b0f08"
+metafile = true
+
+[[files]]
+file = "mods/item/sophisticated-storage-create-integration.pw.toml"
+hash = "a2bb36d782a9babcf72faa8e3ccd5bb9a6e252eedab8bea698b1af34fa2fe552"
+metafile = true
+
+[[files]]
+file = "mods/item/sophisticated-storage.pw.toml"
+hash = "d2c42f16fdb32a2b7a2cd8b976ef4d634176d1d25af2b72bae672067083ffdf5"
+metafile = true
+
+[[files]]
 file = "mods/performance/alltheleaks.pw.toml"
 hash = "49dedd58a30df8112ca9922789f05726a7775fdc58ef626b05894aad8cfcbea0"
 metafile = true
