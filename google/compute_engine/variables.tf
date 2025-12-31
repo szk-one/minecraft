@@ -14,3 +14,9 @@ variable "packwiz_url" {
   type        = string
   default = "https://szk-one.github.io/minecraft/pack.toml"
 }
+
+variable "rcon_password" {
+  description = "Minecraft サーバーの RCON パスワード。空の場合は起動スクリプトで自動生成します。"
+  type        = string
+  default     = ""
+}

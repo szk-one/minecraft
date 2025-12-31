@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
 
 log() {
   echo "$(date -Iseconds) $*"
@@ -9,6 +9,9 @@ DATA_DISK="/dev/disk/by-id/google-mc-data-disk"
 MOUNT_POINT="/mnt/minecraft"
 COMPOSE_DIR="$${MOUNT_POINT}/compose"
 SERVER_DIR="$${MOUNT_POINT}/server"
+BACKUP_DIR="$${MOUNT_POINT}/backups"
+RCON_PASSWORD_FILE="$${MOUNT_POINT}/rcon-password"
+TERRAFORM_RCON_PASSWORD="${rcon_password}"
 COMPOSE_FILE="$${COMPOSE_DIR}/docker-compose.yml"
 PACKWIZ_URL="${packwiz_url}"
 
@@ -49,6 +52,24 @@ if ! grep -q "$${DATA_DISK}" /etc/fstab; then
   echo "$${DATA_DISK} $${MOUNT_POINT} ext4 defaults 0 2" >> /etc/fstab
 fi
 
+RCON_PASSWORD="$${TERRAFORM_RCON_PASSWORD}"
+if [ -z "$${RCON_PASSWORD}" ]; then
+  if [ -f "$${RCON_PASSWORD_FILE}" ]; then
+    RCON_PASSWORD="$(cat "$${RCON_PASSWORD_FILE}")"
+  else
+    if command -v openssl >/dev/null 2>&1; then
+      RCON_PASSWORD="$(openssl rand -hex 16)"
+    else
+      RCON_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32)"
+    fi
+    echo "$${RCON_PASSWORD}" > "$${RCON_PASSWORD_FILE}"
+    chmod 600 "$${RCON_PASSWORD_FILE}"
+  fi
+else
+  echo "$${RCON_PASSWORD}" > "$${RCON_PASSWORD_FILE}"
+  chmod 600 "$${RCON_PASSWORD_FILE}"
+fi
+
 log "Configuring Docker apt repository"
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
@@ -63,8 +84,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli contai
 systemctl enable docker
 systemctl restart docker
 
-mkdir -p "$${SERVER_DIR}" "$${COMPOSE_DIR}"
-chown -R 1000:1000 "$${SERVER_DIR}"
+mkdir -p "$${SERVER_DIR}" "$${COMPOSE_DIR}" "$${BACKUP_DIR}"
+chown -R 1000:1000 "$${SERVER_DIR}" "$${BACKUP_DIR}"
 
 cat <<EOF > "$${COMPOSE_FILE}"
 services:
@@ -81,8 +102,25 @@ services:
       MEMORY: "4G"
       USE_PACKWIZ: "true"
       PACKWIZ_URL: "$${PACKWIZ_URL}"
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "$${RCON_PASSWORD}"
+      RCON_PORT: "25575"
     volumes:
       - /mnt/minecraft/server:/data
+  mc-backup:
+    container_name: minecraft-backup
+    image: itzg/mc-backup
+    depends_on:
+      - minecraft
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      RCON_HOST: "minecraft"
+      RCON_PORT: "25575"
+      RCON_PASSWORD: "$${RCON_PASSWORD}"
+    volumes:
+      - /mnt/minecraft/server:/data:ro
+      - /mnt/minecraft/backups:/backups
 EOF
 
 log "Deploying Docker Compose stack"

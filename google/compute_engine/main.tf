@@ -52,7 +52,8 @@ resource "google_compute_instance" "mc_server" {
   metadata_startup_script = templatefile(
     "${path.module}/templates/startup.sh.tftpl",
     {
-      packwiz_url = var.packwiz_url
+      packwiz_url   = var.packwiz_url
+      rcon_password = var.rcon_password
     }
   )
   metadata = {
