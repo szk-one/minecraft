@@ -79,3 +79,8 @@ metafile = true
 file = "mods/performance/spark.pw.toml"
 hash = "6d9eaf43c14c66465e87bf03cc5cb5ecef57b3f2e8063c52f6332d33689d30be"
 metafile = true
+
+[[files]]
+file = "mods/server/prometheus-exporter.pw.toml"
+hash = "4033f9d39c46d85f9ba0dbef78a11d809af83cc1046c362b05aa5d04ea35b6a5"
+metafile = true
