@@ -6,13 +6,8 @@ hash = "978e8a9b6c30d3621523ae40550adbec25cb60b9a16cefbc8785f4039801a789"
 metafile = true
 
 [[files]]
-file = "mods/create/create-dreams-and-desires.pw.toml"
-hash = "df536f068808076c24dac917d86d581886ae5fb912672ec949d9c71a1a7a7fb7"
-metafile = true
-
-[[files]]
 file = "mods/create/create.pw.toml"
-hash = "d6043c928c34ce1f4ada544a49193f95c281665cf88d4931e73370ea02870bed"
+hash = "eb7b4a7b28d4806c7bb7a0cf84f4dca90fc5d62317573e9100542bc484a48750"
 metafile = true
 
 [[files]]
@@ -51,28 +46,18 @@ hash = "942b02525962980b6176677cca162d27c1210b686985ad11db0055fe39d42a7d"
 metafile = true
 
 [[files]]
+file = "mods/performance/lithium.pw.toml"
+hash = "3ac8c76f4cb2f1200d60fa2e74108d9cb9355346ddb8a4a735134dfac7b77136"
+metafile = true
+
+[[files]]
 file = "mods/performance/modernfix.pw.toml"
 hash = "97521b85e74dfbc642b9102a46be0cdda07b9cfe36aba027a3878054f93ccfcb"
 metafile = true
 
 [[files]]
-file = "mods/performance/radium-reforged.pw.toml"
-hash = "67591382be789035eec313d92c15b224c0bdecab65091c9191c44502a99e834e"
-metafile = true
-
-[[files]]
 file = "mods/performance/saturn.pw.toml"
 hash = "8a0271e7d5c8f4badd2886fd9a8ca75c5a33868ac90828cf3b5dbe932025a0fa"
-metafile = true
-
-[[files]]
-file = "mods/performance/servercore.pw.toml"
-hash = "00f400af981bbe8be3767ef49f4bc422a9649c3fa2d403bae7b25202a05fda1a"
-metafile = true
-
-[[files]]
-file = "mods/performance/smooth-chunk-save.pw.toml"
-hash = "ff6934dbf3203c63dbdab3b2b3a89e82c047ad22db63d8511d737a489aac743c"
 metafile = true
 
 [[files]]
