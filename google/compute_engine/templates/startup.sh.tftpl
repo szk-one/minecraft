@@ -10,10 +10,19 @@ MOUNT_POINT="/mnt/minecraft"
 COMPOSE_DIR="$${MOUNT_POINT}/compose"
 SERVER_DIR="$${MOUNT_POINT}/server"
 BACKUP_DIR="$${MOUNT_POINT}/backups"
+PROMETHEUS_DATA_DIR="$${MOUNT_POINT}/prometheus"
+GRAFANA_DATA_DIR="$${MOUNT_POINT}/grafana"
 RCON_PASSWORD_FILE="$${MOUNT_POINT}/rcon-password"
+GRAFANA_PASSWORD_FILE="$${MOUNT_POINT}/grafana-admin-password"
 TERRAFORM_RCON_PASSWORD="${rcon_password}"
+TERRAFORM_GRAFANA_PASSWORD="${grafana_admin_password}"
 COMPOSE_FILE="$${COMPOSE_DIR}/docker-compose.yml"
 PACKWIZ_URL="${packwiz_url}"
+PROMETHEUS_CONFIG_FILE="$${COMPOSE_DIR}/prometheus.yml"
+GRAFANA_PROVISIONING_DIR="$${COMPOSE_DIR}/grafana"
+GRAFANA_DATASOURCES_DIR="$${GRAFANA_PROVISIONING_DIR}/datasources"
+GRAFANA_DASHBOARDS_DIR="$${GRAFANA_PROVISIONING_DIR}/dashboards"
+GRAFANA_DASHBOARDS_JSON_DIR="$${COMPOSE_DIR}/grafana/dashboards-json"
 
 log "Starting startup script"
 
@@ -70,6 +79,24 @@ else
   chmod 600 "$${RCON_PASSWORD_FILE}"
 fi
 
+GRAFANA_PASSWORD="$${TERRAFORM_GRAFANA_PASSWORD}"
+if [ -z "$${GRAFANA_PASSWORD}" ]; then
+  if [ -f "$${GRAFANA_PASSWORD_FILE}" ]; then
+    GRAFANA_PASSWORD="$(cat "$${GRAFANA_PASSWORD_FILE}")"
+  else
+    if command -v openssl >/dev/null 2>&1; then
+      GRAFANA_PASSWORD="$(openssl rand -hex 16)"
+    else
+      GRAFANA_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32)"
+    fi
+    echo "$${GRAFANA_PASSWORD}" > "$${GRAFANA_PASSWORD_FILE}"
+    chmod 600 "$${GRAFANA_PASSWORD_FILE}"
+  fi
+else
+  echo "$${GRAFANA_PASSWORD}" > "$${GRAFANA_PASSWORD_FILE}"
+  chmod 600 "$${GRAFANA_PASSWORD_FILE}"
+fi
+
 log "Configuring Docker apt repository"
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
@@ -84,8 +111,663 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli contai
 systemctl enable docker
 systemctl restart docker
 
-mkdir -p "$${SERVER_DIR}" "$${COMPOSE_DIR}" "$${BACKUP_DIR}"
+mkdir -p \
+  "$${SERVER_DIR}" \
+  "$${COMPOSE_DIR}" \
+  "$${BACKUP_DIR}" \
+  "$${PROMETHEUS_DATA_DIR}" \
+  "$${GRAFANA_DATA_DIR}" \
+  "$${GRAFANA_PROVISIONING_DIR}" \
+  "$${GRAFANA_DATASOURCES_DIR}" \
+  "$${GRAFANA_DASHBOARDS_DIR}" \
+  "$${GRAFANA_DASHBOARDS_JSON_DIR}"
+
 chown -R 1000:1000 "$${SERVER_DIR}" "$${BACKUP_DIR}"
+chown -R 65534:65534 "$${PROMETHEUS_DATA_DIR}" || true
+chown -R 472:472 "$${GRAFANA_DATA_DIR}" || true
+
+cat <<'EOF' > "$${PROMETHEUS_CONFIG_FILE}"
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "minecraft_server"
+    static_configs:
+      - targets: ["minecraft:19565"]
+  - job_name: "node_exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+EOF
+
+cat <<'EOF' > "$${GRAFANA_DATASOURCES_DIR}/datasource.yml"
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    uid: prometheus
+EOF
+
+cat <<'EOF' > "$${GRAFANA_DASHBOARDS_DIR}/dashboards.yml"
+apiVersion: 1
+providers:
+  - name: Minecraft
+    orgId: 1
+    folder: Minecraft
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards
+EOF
+
+# サーバー利用状況を俯瞰できるダッシュボードを投入
+cat <<'EOF' > "$${GRAFANA_DASHBOARDS_JSON_DIR}/minecraft-overview.json"
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 18
+              }
+            ]
+          },
+          "unit": "tps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "clamp_max(20, 1 / (rate(mc_server_tick_seconds_sum[1m]) / rate(mc_server_tick_seconds_count[1m])))",
+          "refId": "A"
+        }
+      ],
+      "title": "現在のTPS",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 15
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "count(mc_player_list)",
+          "refId": "A"
+        }
+      ],
+      "title": "接続プレイヤー数",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 2000
+              },
+              {
+                "color": "red",
+                "value": 4000
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "sum(mc_dimension_chunks_loaded)",
+          "refId": "A"
+        }
+      ],
+      "title": "読み込みチャンク数",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 500
+              },
+              {
+                "color": "red",
+                "value": 800
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "sum(mc_entities_total)",
+          "refId": "A"
+        }
+      ],
+      "title": "エンティティ数",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "showPoints": "never",
+          "unit": "tps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "clamp_max(20, 1 / (rate(mc_server_tick_seconds_sum[5m]) / rate(mc_server_tick_seconds_count[5m])))",
+          "legendFormat": "TPS",
+          "refId": "A"
+        }
+      ],
+      "title": "TPS 推移",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "showPoints": "never",
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "rate(mc_server_tick_seconds_sum[5m]) / rate(mc_server_tick_seconds_count[5m]) * 1000",
+          "legendFormat": "MSPT",
+          "refId": "A"
+        }
+      ],
+      "title": "平均ティック時間 (MSPT)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "showPoints": "auto",
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "count(mc_player_list)",
+          "legendFormat": "プレイヤー",
+          "refId": "A"
+        }
+      ],
+      "title": "プレイヤー数の推移",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "showPoints": "never",
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+              "expr": "sum by (name) (mc_dimension_chunks_loaded)",
+              "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ],
+      "title": "ディメンション別読み込みチャンク",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "showPoints": "never",
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 20
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "(1 - avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])))*100",
+          "legendFormat": "CPU 使用率",
+          "refId": "A"
+        }
+      ],
+      "title": "ホストCPU使用率",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "showPoints": "never",
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 20
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "(1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100",
+          "legendFormat": "メモリ使用率",
+          "refId": "A"
+        }
+      ],
+      "title": "ホストメモリ使用率",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "drawStyle": "line",
+          "lineWidth": 2,
+          "showPoints": "never",
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 20
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "(1 - node_filesystem_avail_bytes{mountpoint=\"/mnt/minecraft\",fstype!~\"rootfs|tmpfs\"} / node_filesystem_size_bytes{mountpoint=\"/mnt/minecraft\",fstype!~\"rootfs|tmpfs\"}) * 100",
+          "legendFormat": "ディスク使用率",
+          "refId": "A"
+        }
+      ],
+      "title": "データディスク使用率",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "minecraft"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m"
+    ]
+  },
+  "title": "Minecraft Overview",
+  "uid": "minecraft-overview",
+  "version": 1
+}
+EOF
 
 cat <<EOF > "$${COMPOSE_FILE}"
 services:
@@ -95,6 +777,8 @@ services:
     restart: unless-stopped
     ports:
       - "25565:25565"
+    expose:
+      - "19565"
     environment:
       EULA: "TRUE"
       TYPE: "NEOFORGE"
@@ -121,10 +805,92 @@ services:
     volumes:
       - /mnt/minecraft/server:/data:ro
       - /mnt/minecraft/backups:/backups
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.53.1
+    restart: unless-stopped
+    depends_on:
+      - minecraft
+      - node-exporter
+    ports:
+      - "9090:9090"
+    volumes:
+      - /mnt/minecraft/compose/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /mnt/minecraft/prometheus:/prometheus
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter:v1.8.1
+    restart: unless-stopped
+    pid: host
+    command:
+      - --path.rootfs=/host
+    volumes:
+      - /:/host:ro,rslave
+    expose:
+      - "9100"
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:11.1.0
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "admin"
+      GF_SECURITY_ADMIN_PASSWORD: "$${GRAFANA_PASSWORD}"
+      GF_USERS_DEFAULT_THEME: "light"
+    volumes:
+      - /mnt/minecraft/grafana:/var/lib/grafana
+      - /mnt/minecraft/compose/grafana/datasources:/etc/grafana/provisioning/datasources
+      - /mnt/minecraft/compose/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - /mnt/minecraft/compose/grafana/dashboards-json:/var/lib/grafana/dashboards
 EOF
 
 log "Deploying Docker Compose stack"
 docker compose -f "$${COMPOSE_FILE}" pull
 log "Starting minecraft stack"
 docker compose -f "$${COMPOSE_FILE}" up -d
+
+log "Flattening mod directory structure for NeoForge compatibility"
+FLATTEN_SCRIPT=$(cat <<'EOF'
+set -euo pipefail
+MOD_DIR=/data/mods
+if [ ! -d "$MOD_DIR" ]; then
+  exit 1
+fi
+cd "$MOD_DIR"
+jars=$(find . -mindepth 2 -type f -name '*.jar')
+if [ -z "$jars" ]; then
+  exit 1
+fi
+find . -maxdepth 1 -type l -name '*.jar' -delete || true
+while IFS= read -r jar; do
+  [ -z "$jar" ] && continue
+  base=$(basename "$jar")
+  ln -sf "$jar" "$base"
+done <<< "$jars"
+EOF
+)
+
+flatten_success=false
+for attempt in $(seq 1 12); do
+  if docker compose -f "$${COMPOSE_FILE}" exec -T minecraft bash -lc "$FLATTEN_SCRIPT"; then
+    log "Mod jars flattened successfully"
+    flatten_success=true
+    break
+  fi
+  log "Waiting for mods to sync before flattening (attempt $${attempt}/12)"
+  sleep 10
+done
+
+if [ "$flatten_success" != true ]; then
+  log "Failed to flatten mod directory structure" >&2
+else
+  log "Restarting minecraft container to load flattened mods"
+  docker compose -f "$${COMPOSE_FILE}" restart minecraft
+  log "Waiting for minecraft container to finish restarting"
+  docker compose -f "$${COMPOSE_FILE}" exec -T minecraft bash -lc 'until pgrep -f "net.minecraft.server.MinecraftServer" >/dev/null; do sleep 5; done'
+fi
+
 log "Startup script completed"

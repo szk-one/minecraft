@@ -20,3 +20,15 @@ variable "rcon_password" {
   type        = string
   default     = ""
 }
+
+variable "monitoring_allowed_source_ranges" {
+  description = "Prometheus/Grafana のアクセスを許可する CIDR 範囲"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "grafana_admin_password" {
+  description = "Grafana の管理者パスワード。空の場合は起動スクリプトで自動生成します。"
+  type        = string
+  default     = ""
+}

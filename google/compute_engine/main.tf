@@ -22,6 +22,20 @@ resource "google_compute_firewall" "mc_firewall" {
   source_ranges = var.mc_allowed_source_ranges
   target_tags = ["mc-server"]
 }
+
+resource "google_compute_firewall" "monitoring" {
+  project = var.project_id
+  name    = "mc-allow-monitoring"
+  network = google_compute_network.mc_vpc.id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["3000", "9090"]
+  }
+
+  source_ranges = var.monitoring_allowed_source_ranges
+  target_tags   = ["mc-server"]
+}
 resource "google_compute_firewall" "allow_ssh" {
   project = var.project_id
   name = "allow-ssh"
@@ -52,8 +66,9 @@ resource "google_compute_instance" "mc_server" {
   metadata_startup_script = templatefile(
     "${path.module}/templates/startup.sh.tftpl",
     {
-      packwiz_url   = var.packwiz_url
-      rcon_password = var.rcon_password
+      packwiz_url            = var.packwiz_url
+      rcon_password          = var.rcon_password
+      grafana_admin_password = var.grafana_admin_password
     }
   )
   metadata = {
