@@ -1,76 +1,76 @@
 hash-format = "sha256"
 
 [[files]]
-file = "mods/create/create-diesel-generators.pw.toml"
-hash = "978e8a9b6c30d3621523ae40550adbec25cb60b9a16cefbc8785f4039801a789"
-metafile = true
-
-[[files]]
-file = "mods/create/create-new-age.pw.toml"
-hash = "a9dad68061b69b23ba00cd93d31dc8b5622f1426b4e684aaf6022e1bd492ae56"
-metafile = true
-
-[[files]]
-file = "mods/create/create.pw.toml"
-hash = "eb7b4a7b28d4806c7bb7a0cf84f4dca90fc5d62317573e9100542bc484a48750"
-metafile = true
-
-[[files]]
-file = "mods/item/sophisticated-backpacks-create-integration.pw.toml"
-hash = "c966ea02eb59f31dcaeaebe9d96c9b232a2fb16d2fe971729350e567a4ff1bd7"
-metafile = true
-
-[[files]]
-file = "mods/item/sophisticated-backpacks.pw.toml"
-hash = "08ae2f34e6c0c1e27717ae13cbffe3e0f8efb1dd6b7480abf8cd75f87bde145c"
-metafile = true
-
-[[files]]
-file = "mods/item/sophisticated-core.pw.toml"
-hash = "6d755450264fa4a2afcaea38daa7be2a3f2fb3d0edad588ba7ed0cb4228b0f08"
-metafile = true
-
-[[files]]
-file = "mods/item/sophisticated-storage-create-integration.pw.toml"
-hash = "a2bb36d782a9babcf72faa8e3ccd5bb9a6e252eedab8bea698b1af34fa2fe552"
-metafile = true
-
-[[files]]
-file = "mods/item/sophisticated-storage.pw.toml"
-hash = "d2c42f16fdb32a2b7a2cd8b976ef4d634176d1d25af2b72bae672067083ffdf5"
-metafile = true
-
-[[files]]
-file = "mods/performance/alltheleaks.pw.toml"
+file = "mods/alltheleaks.pw.toml"
 hash = "49dedd58a30df8112ca9922789f05726a7775fdc58ef626b05894aad8cfcbea0"
 metafile = true
 
 [[files]]
-file = "mods/performance/ferritecore.pw.toml"
+file = "mods/create-diesel-generators.pw.toml"
+hash = "978e8a9b6c30d3621523ae40550adbec25cb60b9a16cefbc8785f4039801a789"
+metafile = true
+
+[[files]]
+file = "mods/create-new-age.pw.toml"
+hash = "a9dad68061b69b23ba00cd93d31dc8b5622f1426b4e684aaf6022e1bd492ae56"
+metafile = true
+
+[[files]]
+file = "mods/create.pw.toml"
+hash = "eb7b4a7b28d4806c7bb7a0cf84f4dca90fc5d62317573e9100542bc484a48750"
+metafile = true
+
+[[files]]
+file = "mods/ferritecore.pw.toml"
 hash = "942b02525962980b6176677cca162d27c1210b686985ad11db0055fe39d42a7d"
 metafile = true
 
 [[files]]
-file = "mods/performance/lithium.pw.toml"
+file = "mods/lithium.pw.toml"
 hash = "3ac8c76f4cb2f1200d60fa2e74108d9cb9355346ddb8a4a735134dfac7b77136"
 metafile = true
 
 [[files]]
-file = "mods/performance/modernfix.pw.toml"
+file = "mods/modernfix.pw.toml"
 hash = "97521b85e74dfbc642b9102a46be0cdda07b9cfe36aba027a3878054f93ccfcb"
 metafile = true
 
 [[files]]
-file = "mods/performance/saturn.pw.toml"
+file = "mods/prometheus-exporter.pw.toml"
+hash = "4033f9d39c46d85f9ba0dbef78a11d809af83cc1046c362b05aa5d04ea35b6a5"
+metafile = true
+
+[[files]]
+file = "mods/saturn.pw.toml"
 hash = "8a0271e7d5c8f4badd2886fd9a8ca75c5a33868ac90828cf3b5dbe932025a0fa"
 metafile = true
 
 [[files]]
-file = "mods/performance/spark.pw.toml"
-hash = "6d9eaf43c14c66465e87bf03cc5cb5ecef57b3f2e8063c52f6332d33689d30be"
+file = "mods/sophisticated-backpacks-create-integration.pw.toml"
+hash = "c966ea02eb59f31dcaeaebe9d96c9b232a2fb16d2fe971729350e567a4ff1bd7"
 metafile = true
 
 [[files]]
-file = "mods/server/prometheus-exporter.pw.toml"
-hash = "4033f9d39c46d85f9ba0dbef78a11d809af83cc1046c362b05aa5d04ea35b6a5"
+file = "mods/sophisticated-backpacks.pw.toml"
+hash = "08ae2f34e6c0c1e27717ae13cbffe3e0f8efb1dd6b7480abf8cd75f87bde145c"
+metafile = true
+
+[[files]]
+file = "mods/sophisticated-core.pw.toml"
+hash = "6d755450264fa4a2afcaea38daa7be2a3f2fb3d0edad588ba7ed0cb4228b0f08"
+metafile = true
+
+[[files]]
+file = "mods/sophisticated-storage-create-integration.pw.toml"
+hash = "a2bb36d782a9babcf72faa8e3ccd5bb9a6e252eedab8bea698b1af34fa2fe552"
+metafile = true
+
+[[files]]
+file = "mods/sophisticated-storage.pw.toml"
+hash = "d2c42f16fdb32a2b7a2cd8b976ef4d634176d1d25af2b72bae672067083ffdf5"
+metafile = true
+
+[[files]]
+file = "mods/spark.pw.toml"
+hash = "6d9eaf43c14c66465e87bf03cc5cb5ecef57b3f2e8063c52f6332d33689d30be"
 metafile = true
