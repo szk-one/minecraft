@@ -852,45 +852,4 @@ docker compose -f "$${COMPOSE_FILE}" pull
 log "Starting minecraft stack"
 docker compose -f "$${COMPOSE_FILE}" up -d
 
-log "Flattening mod directory structure for NeoForge compatibility"
-FLATTEN_SCRIPT=$(cat <<'EOF'
-set -euo pipefail
-MOD_DIR=/data/mods
-if [ ! -d "$MOD_DIR" ]; then
-  exit 1
-fi
-cd "$MOD_DIR"
-jars=$(find . -mindepth 2 -type f -name '*.jar')
-if [ -z "$jars" ]; then
-  exit 1
-fi
-find . -maxdepth 1 -type l -name '*.jar' -delete || true
-while IFS= read -r jar; do
-  [ -z "$jar" ] && continue
-  base=$(basename "$jar")
-  ln -sf "$jar" "$base"
-done <<< "$jars"
-EOF
-)
-
-flatten_success=false
-for attempt in $(seq 1 12); do
-  if docker compose -f "$${COMPOSE_FILE}" exec -T minecraft bash -lc "$FLATTEN_SCRIPT"; then
-    log "Mod jars flattened successfully"
-    flatten_success=true
-    break
-  fi
-  log "Waiting for mods to sync before flattening (attempt $${attempt}/12)"
-  sleep 10
-done
-
-if [ "$flatten_success" != true ]; then
-  log "Failed to flatten mod directory structure" >&2
-else
-  log "Restarting minecraft container to load flattened mods"
-  docker compose -f "$${COMPOSE_FILE}" restart minecraft
-  log "Waiting for minecraft container to finish restarting"
-  docker compose -f "$${COMPOSE_FILE}" exec -T minecraft bash -lc 'until pgrep -f "net.minecraft.server.MinecraftServer" >/dev/null; do sleep 5; done'
-fi
-
 log "Startup script completed"
