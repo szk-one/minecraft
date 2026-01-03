@@ -1,3 +1,4 @@
+# 概要: StructurizeやMineColoniesで使われるUIコンポーネントライブラリ。
 name = "BlockUI"
 filename = "blockui-1.0.208-1.21.1-snapshot.jar"
 side = "both"

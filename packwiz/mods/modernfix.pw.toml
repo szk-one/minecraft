@@ -1,3 +1,4 @@
+# 概要: 読み込み時間短縮や各種ボトルネック修正をまとめたパフォーマンスパッチ。
 name = "ModernFix"
 filename = "modernfix-neoforge-5.25.1+mc1.21.1.jar"
 side = "both"

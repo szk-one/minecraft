@@ -1,3 +1,4 @@
+# 概要: メモリリークを抑えて長時間プレイ時の安定性を高める最適化MOD。
 name = "AllTheLeaks (Memory Leak Fix)"
 filename = "alltheleaks-1.1.4+1.21.1-neoforge.jar"
 side = "both"

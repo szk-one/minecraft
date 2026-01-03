@@ -1,3 +1,4 @@
+# 概要: メモリ使用量とチャンク処理を最適化するForge系改善MOD。
 name = "FerriteCore ((Neo)Forge)"
 filename = "ferritecore-7.0.2-neoforge.jar"
 side = "both"

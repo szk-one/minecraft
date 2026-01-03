@@ -1,3 +1,4 @@
+# 概要: MineColoniesの住民にCreateの自動化を連携させるブリッジMOD。
 name = "CreateColonies"
 filename = "createcolonies-2.0.0.jar"
 side = "both"

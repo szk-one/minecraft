@@ -70,12 +70,6 @@
   <div class="summary" id="summary"></div>
   <div class="filters">
     <label>
-      Category
-      <select id="categoryFilter">
-        <option value="">All Categories</option>
-      </select>
-    </label>
-    <label>
       Side
       <select id="sideFilter">
         <option value="">All Sides</option>
@@ -96,7 +90,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Category</th>
+        <th>概要</th>
         <th>Side</th>
         <th>Source</th>
         <th>Filename</th>
@@ -107,7 +101,6 @@
   </table>
   <script>
     let mods = [];
-    const categoryFilter = document.getElementById('categoryFilter');
     const sideFilter = document.getElementById('sideFilter');
     const sourceFilter = document.getElementById('sourceFilter');
     const searchFilter = document.getElementById('searchFilter');
@@ -121,17 +114,8 @@
     }
 
     function populateFilters() {
-      resetSelect(categoryFilter);
       resetSelect(sideFilter);
       resetSelect(sourceFilter);
-
-      const categories = Array.from(new Set(mods.map(mod => mod.category))).sort();
-      categories.forEach(category => {
-        const option = document.createElement('option');
-        option.value = category;
-        option.textContent = category;
-        categoryFilter.appendChild(option);
-      });
 
       const sides = Array.from(new Set(mods.map(mod => mod.side))).sort();
       sides.forEach(side => {
@@ -151,17 +135,15 @@
     }
 
     function render() {
-      const categoryValue = categoryFilter.value;
       const sideValue = sideFilter.value;
       const sourceValue = sourceFilter.value;
       const searchValue = searchFilter.value.trim().toLowerCase();
 
       const filtered = mods.filter(mod => {
-        const matchesCategory = !categoryValue || mod.category === categoryValue;
         const matchesSide = !sideValue || mod.side === sideValue;
         const matchesSource = !sourceValue || (mod.source || 'n/a') === sourceValue;
-        const matchesSearch = !searchValue || `${mod.name} ${mod.filename}`.toLowerCase().includes(searchValue);
-        return matchesCategory && matchesSide && matchesSource && matchesSearch;
+        const matchesSearch = !searchValue || `${mod.name} ${mod.filename} ${mod.summary}`.toLowerCase().includes(searchValue);
+        return matchesSide && matchesSource && matchesSearch;
       });
 
       modsTable.innerHTML = '';
@@ -169,7 +151,7 @@
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${mod.name}</td>
-          <td>${mod.category}</td>
+          <td>${mod.summary}</td>
           <td>${mod.side}</td>
           <td>${mod.source || 'n/a'}</td>
           <td>${mod.filename}</td>
@@ -206,14 +188,12 @@
             const text = await response.text();
             const parsed = parseModToml(text);
             const relativePath = file.replace(/^mods\//, '');
-            const parts = relativePath.split('/');
-            const category = parts.length > 1 ? parts[0] : 'misc';
             results.push({
-              category,
               name: parsed.name,
               filename: parsed.filename,
               side: parsed.side,
               source: parsed.source,
+              summary: parsed.summary || '概要未設定',
               path: relativePath
             });
           } catch (error) {
@@ -221,13 +201,7 @@
           }
         }
 
-        mods = results.sort((a, b) => {
-          const categoryCompare = a.category.localeCompare(b.category);
-          if (categoryCompare !== 0) {
-            return categoryCompare;
-          }
-          return a.name.localeCompare(b.name);
-        });
+        mods = results.sort((a, b) => a.name.localeCompare(b.name));
 
         populateFilters();
         render();
@@ -246,13 +220,15 @@
       const name = matchValue(text, /^name\s*=\s*"([^"]+)"/m) || 'Unknown';
       const filename = matchValue(text, /^filename\s*=\s*"([^"]+)"/m) || 'Unknown';
       const side = matchValue(text, /^side\s*=\s*"([^"]+)"/m) || 'both';
+      const summaryValue = matchValue(text, /^#\s*概要[:：]\s*(.+)$/m);
+      const summary = summaryValue ? summaryValue.trim() : '';
       let source = '';
       if (/\[update\.modrinth\]/i.test(text)) {
         source = 'modrinth';
       } else if (/\[update\.curseforge\]/i.test(text)) {
         source = 'curseforge';
       }
-      return { name, filename, side, source };
+      return { name, filename, side, source, summary };
     }
 
     function matchValue(text, regex) {
@@ -262,7 +238,6 @@
 
     loadMods();
 
-    categoryFilter.addEventListener('change', render);
     sideFilter.addEventListener('change', render);
     sourceFilter.addEventListener('change', render);
     searchFilter.addEventListener('input', render);

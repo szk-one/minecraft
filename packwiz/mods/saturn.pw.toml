@@ -1,3 +1,4 @@
+# 概要: メモリ断片化を抑えガベージコレクションを安定させる最適化MOD。
 name = "Saturn"
 filename = "saturn-mc1.21.1-0.1.5.jar"
 side = "both"

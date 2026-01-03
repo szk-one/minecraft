@@ -1,3 +1,4 @@
+# 概要: エンティティや物理計算を高速化するサーバー最適化MOD。
 name = "Lithium (Fabric/NeoForge)"
 filename = "lithium-neoforge-0.15.1+mc1.21.1.jar"
 side = "both"

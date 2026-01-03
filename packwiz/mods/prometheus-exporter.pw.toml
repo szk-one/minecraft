@@ -1,6 +1,7 @@
+# 概要: Prometheus形式でサーバー統計を出力し監視用ダッシュボードに連携できる。
 name = "Prometheus Exporter"
 filename = "Prometheus-Exporter-1.21.1-neoforge-1.2.1.jar"
-side = "both"
+side = "server"
 
 [download]
 hash-format = "sha1"

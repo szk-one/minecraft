@@ -1,3 +1,4 @@
+# 概要: Sophisticated BackpacksをCreateの搬送装置で扱えるようにする連携MOD。
 name = "Sophisticated Backpacks Create Integration"
 filename = "sophisticatedbackpackscreateintegration-1.21.1-0.1.5.29.jar"
 side = "both"

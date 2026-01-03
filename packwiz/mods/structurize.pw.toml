@@ -1,3 +1,4 @@
+# 概要: 建築テンプレートや資材計算を提供するMineColonies向け建築支援MOD。
 name = "Structurize"
 filename = "structurize-1.0.798-1.21.1-snapshot.jar"
 side = "both"

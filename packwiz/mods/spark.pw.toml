@@ -1,6 +1,7 @@
+# 概要: サーバーやクライアントの負荷状況を可視化するプロファイラMOD。
 name = "spark"
 filename = "spark-1.10.124-neoforge.jar"
-side = "both"
+side = "server"
 
 [download]
 hash-format = "sha1"
