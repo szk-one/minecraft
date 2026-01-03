@@ -5,9 +5,5 @@ side = "both"
 [download]
 hash-format = "sha1"
 hash = "fe6641c500c4febe5c9e5835737951484a6ee922"
-mode = "metadata:curseforge"
-
-[update]
-[update.curseforge]
-file-id = 7218939
-project-id = 1332665
+mode = "url"
+url = "https://mediafilez.forgecdn.net/files/7218/939/createcolonies-2.0.0.jar"

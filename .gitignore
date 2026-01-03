@@ -39,3 +39,5 @@ terraform.rc
 **/.infracost
 
 .DS_Store
+
+packwiz/**.zip

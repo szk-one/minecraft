@@ -16,6 +16,11 @@ hash = "978e8a9b6c30d3621523ae40550adbec25cb60b9a16cefbc8785f4039801a789"
 metafile = true
 
 [[files]]
+file = "mods/create-dreams-desires.pw.toml"
+hash = "1a4296574c62480e296d6eeb5c670445bfe38fbf993b09c2cbdbfb1cf1ef0ec8"
+metafile = true
+
+[[files]]
 file = "mods/create-new-age.pw.toml"
 hash = "a9dad68061b69b23ba00cd93d31dc8b5622f1426b4e684aaf6022e1bd492ae56"
 metafile = true
@@ -27,7 +32,7 @@ metafile = true
 
 [[files]]
 file = "mods/createcolonies.pw.toml"
-hash = "74b6dd87273a2b022c13f4f3d172126792f97f3454fc12d6162124832893afd1"
+hash = "882449a178c7fe5d6aedfcd4b22552fb931f945cbf766e97159927a847b1a239"
 metafile = true
 
 [[files]]
