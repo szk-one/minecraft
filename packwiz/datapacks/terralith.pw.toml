@@ -1,0 +1,8 @@
+name = "Terralith"
+filename = "Terralith_1.21_v2.5.8.zip"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/8oi3bsk5/versions/urbokcOc/Terralith_1.21_v2.5.8.zip"
+hash-format = "sha256"
+hash = "d0f5b0f88152d494cb51c6c06f2b5e52617df9860b2f383d00c85338d81ab164"
