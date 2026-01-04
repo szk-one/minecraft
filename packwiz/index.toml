@@ -31,8 +31,18 @@ hash = "2e6a2f8c477128a76ef059dfef7ca8a1befa2ae0ebe7ae2171e716f0c905cd00"
 metafile = true
 
 [[files]]
+file = "mods/copycats.pw.toml"
+hash = "e3d0e6da51df08d87c9b88fd6b4011de711d95497263b9ecfd1466cbd34b98d5"
+metafile = true
+
+[[files]]
 file = "mods/corgilib.pw.toml"
 hash = "e154b918a8b473942f6428fb8f778c08b46befc2f55387dce75ca39164b83b00"
+metafile = true
+
+[[files]]
+file = "mods/create-connected.pw.toml"
+hash = "64f8e839da919268f5ecdf1df17f466c08befa6048f8b2cadf8897b126fb0976"
 metafile = true
 
 [[files]]
