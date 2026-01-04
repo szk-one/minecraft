@@ -23,6 +23,7 @@ GRAFANA_PROVISIONING_DIR="$${COMPOSE_DIR}/grafana"
 GRAFANA_DATASOURCES_DIR="$${GRAFANA_PROVISIONING_DIR}/datasources"
 GRAFANA_DASHBOARDS_DIR="$${GRAFANA_PROVISIONING_DIR}/dashboards"
 GRAFANA_DASHBOARDS_JSON_DIR="$${COMPOSE_DIR}/grafana/dashboards-json"
+DISCORD_WEBHOOK_URL="${discord_webhook_url}"
 
 log "Starting startup script"
 
@@ -851,5 +852,24 @@ log "Deploying Docker Compose stack"
 docker compose -f "$${COMPOSE_FILE}" pull
 log "Starting minecraft stack"
 docker compose -f "$${COMPOSE_FILE}" up -d
+
+if [ -n "$${DISCORD_WEBHOOK_URL}" ]; then
+  log "Preparing Discord notification"
+  EXTERNAL_IP="$(curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip" || true)"
+  if [ -z "$${EXTERNAL_IP}" ]; then
+    log "Failed to obtain external IP; skipping Discord notification" >&2
+  else
+    INSTANCE_NAME="$(curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name" || true)"
+    if [ -z "$${INSTANCE_NAME}" ]; then
+      INSTANCE_NAME="unknown"
+    fi
+    PAYLOAD="$(printf '{"content":"Minecraftサーバー (%s) が起動しました。IP: %s"}' "$${INSTANCE_NAME}" "$${EXTERNAL_IP}")"
+    if ! curl -sf -H "Content-Type: application/json" -d "$${PAYLOAD}" "$${DISCORD_WEBHOOK_URL}"; then
+      log "Failed to send Discord notification" >&2
+    else
+      log "Sent Discord notification"
+    fi
+  fi
+fi
 
 log "Startup script completed"

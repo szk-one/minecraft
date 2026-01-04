@@ -32,3 +32,9 @@ variable "grafana_admin_password" {
   type        = string
   default     = ""
 }
+
+variable "discord_webhook_url" {
+  description = "サーバー起動通知を送信する Discord Webhook の URL"
+  type        = string
+  default     = ""
+}

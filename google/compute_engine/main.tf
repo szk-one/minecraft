@@ -69,6 +69,7 @@ resource "google_compute_instance" "mc_server" {
       packwiz_url            = var.packwiz_url
       rcon_password          = var.rcon_password
       grafana_admin_password = var.grafana_admin_password
+      discord_webhook_url    = var.discord_webhook_url
     }
   )
   metadata = {
