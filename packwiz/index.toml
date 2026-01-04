@@ -6,11 +6,6 @@ hash = "fa40e7c9879f4ad59dc466dca96e1f450395568d27c6a6f626047cefda8eaea9"
 metafile = true
 
 [[files]]
-file = "mods/blockui.pw.toml"
-hash = "ef6f4494f91c36b089bddbbbc1179e8d0457d5c7d6491900599e36ec18306219"
-metafile = true
-
-[[files]]
 file = "mods/create-diesel-generators.pw.toml"
 hash = "02fab017c89f55b1cfbde17d4c9c7945cbd6cac109cc0690a8dda5e4b6ccf44f"
 metafile = true
@@ -31,16 +26,6 @@ hash = "36effdfa56cf8aa6d563db77c5dd80b626693d0c77d0b4e3c244aa80c10cab05"
 metafile = true
 
 [[files]]
-file = "mods/createcolonies.pw.toml"
-hash = "86d92c3ae7a7b8529cffd95499fb7bf68149646ec23f5633a25c218d1c409540"
-metafile = true
-
-[[files]]
-file = "mods/domum-ornamentum.pw.toml"
-hash = "92220e7946172ae3d6995b69dcdc05c8f5b1c29ff8fff24a469e14532c3cb55b"
-metafile = true
-
-[[files]]
 file = "mods/ferritecore.pw.toml"
 hash = "875e9067e6b573d857ea6524cbf7c9bcaa7a4fc129fe18b422dab88692ddbbaa"
 metafile = true
@@ -51,18 +36,8 @@ hash = "ae86ce95fd8c6d3ff9b924b49beb7a272390ede057348645e6abef726473029e"
 metafile = true
 
 [[files]]
-file = "mods/minecolonies.pw.toml"
-hash = "65eb8f48dfcc1b4b739103acfadea49103669850c7a224672ade635d4134009f"
-metafile = true
-
-[[files]]
 file = "mods/modernfix.pw.toml"
 hash = "e8b121e7dd0d0dc6bee6a968e26c4c2f3cc2372157722bbdced899c62d372860"
-metafile = true
-
-[[files]]
-file = "mods/multi-piston.pw.toml"
-hash = "abcc5a7aedaf2f9f347aea24180a137d85fbd176bb0c76af85b0e84d3f733be0"
 metafile = true
 
 [[files]]
@@ -103,14 +78,4 @@ metafile = true
 [[files]]
 file = "mods/spark.pw.toml"
 hash = "11c3d2f6e23cce91ba2b2f1dffc700e9d0e6c8f7406f25bc3b04c93b5bc91b4b"
-metafile = true
-
-[[files]]
-file = "mods/structurize.pw.toml"
-hash = "8db22beeee61c81a92b180b2dc4c90abdab001574c1b13e5d6b1aa99dda14e56"
-metafile = true
-
-[[files]]
-file = "mods/towntalk.pw.toml"
-hash = "28a573c20c674626ae55f66ab7e972a0fc4c282fd9f8e01516bcb70a3136d36a"
 metafile = true
