@@ -26,6 +26,11 @@ hash = "fa40e7c9879f4ad59dc466dca96e1f450395568d27c6a6f626047cefda8eaea9"
 metafile = true
 
 [[files]]
+file = "mods/clumps.pw.toml"
+hash = "2e6a2f8c477128a76ef059dfef7ca8a1befa2ae0ebe7ae2171e716f0c905cd00"
+metafile = true
+
+[[files]]
 file = "mods/corgilib.pw.toml"
 hash = "e154b918a8b473942f6428fb8f778c08b46befc2f55387dce75ca39164b83b00"
 metafile = true
