@@ -6,6 +6,11 @@ hash = "fa40e7c9879f4ad59dc466dca96e1f450395568d27c6a6f626047cefda8eaea9"
 metafile = true
 
 [[files]]
+file = "mods/corgilib.pw.toml"
+hash = "e154b918a8b473942f6428fb8f778c08b46befc2f55387dce75ca39164b83b00"
+metafile = true
+
+[[files]]
 file = "mods/create-diesel-generators.pw.toml"
 hash = "02fab017c89f55b1cfbde17d4c9c7945cbd6cac109cc0690a8dda5e4b6ccf44f"
 metafile = true
@@ -26,8 +31,28 @@ hash = "36effdfa56cf8aa6d563db77c5dd80b626693d0c77d0b4e3c244aa80c10cab05"
 metafile = true
 
 [[files]]
+file = "mods/data-anchor.pw.toml"
+hash = "7f02ff265c96a103bd044602ab48788520d364c22824a69a77da6f81dd984103"
+metafile = true
+
+[[files]]
+file = "mods/enhanced-celestials.pw.toml"
+hash = "0bb3a092472cc820e42e83ac0aac97e52f8cb2920777b79788bb04dc1da0cebc"
+metafile = true
+
+[[files]]
 file = "mods/ferritecore.pw.toml"
 hash = "875e9067e6b573d857ea6524cbf7c9bcaa7a4fc129fe18b422dab88692ddbbaa"
+metafile = true
+
+[[files]]
+file = "mods/guard-villagers.pw.toml"
+hash = "7db4d6f071da73553f0a3d4ca115c89a24effb6c87e15d8f7cebc464239a89c8"
+metafile = true
+
+[[files]]
+file = "mods/improved-mobs.pw.toml"
+hash = "748fda6e06280872a42259eea26312a65d65aa6554d917f44a3658854bda5d39"
 metafile = true
 
 [[files]]
@@ -78,4 +103,9 @@ metafile = true
 [[files]]
 file = "mods/spark.pw.toml"
 hash = "11c3d2f6e23cce91ba2b2f1dffc700e9d0e6c8f7406f25bc3b04c93b5bc91b4b"
+metafile = true
+
+[[files]]
+file = "mods/tenshilib.pw.toml"
+hash = "41b9eccff7a35a85444c3aad9a998353c5f720086f43e8c36dc2d3b4a9d142f3"
 metafile = true

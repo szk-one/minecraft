@@ -1,0 +1,14 @@
+# 概要: 複数の衛兵やAI改善で村の防衛力を高め襲撃から村人を守る村強化MOD。
+name = "Guard Villagers"
+filename = "guardvillagers-2.4.5-1.21.1.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "5b4ae24ee9f7e2e6e941a2027f4c59e0c3f557fd"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7306932
+project-id = 360203

@@ -1,0 +1,14 @@
+# 概要: 血の月や収穫の月などの月イベントを追加し夜間の環境変化を楽しめる拡張MOD。
+name = "Enhanced Celestials - Blood, Blue, & Harvest (Super) Moons"
+filename = "Enhanced-Celestials-NeoForge-1.21.1-6.0.2.5.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "120a2f2ad8f9fcbefebd087c60592b8057a834fc"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7093308
+project-id = 438447

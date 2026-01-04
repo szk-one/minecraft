@@ -1,0 +1,14 @@
+# 概要: 敵の能力や装備をスケーリング強化し高度なAIで戦闘難易度を跳ね上げるチャレンジMOD。
+name = "Improved Mobs (Forge, NeoForge)"
+filename = "improvedmobs-1.21.1-1.15.2-neoforge.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "70d4255c28db1f00f66a50b3b59b08fdb87402bf"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7239326
+project-id = 282639

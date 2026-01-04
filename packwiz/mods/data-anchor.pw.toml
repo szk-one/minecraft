@@ -1,0 +1,14 @@
+# 概要: エンティティやチャンクに追加データを付与し共通ネットワーク処理を担う多用途ライブラリ。
+name = "Data Anchor"
+filename = "Data_Anchor-neoforge-1.21.1-2.0.0.13.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "6382fb38974844a0508b47330935577f2943de3d"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7256604
+project-id = 1203668
