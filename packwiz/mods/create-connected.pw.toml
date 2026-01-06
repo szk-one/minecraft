@@ -1,3 +1,4 @@
+# 概要: Createに遠隔動力橋やQoLブロックを加えてネットワーク接続と連携を強化するアドオン。
 name = "Create: Connected"
 filename = "create_connected-1.1.10-mc1.21.1.jar"
 side = "both"

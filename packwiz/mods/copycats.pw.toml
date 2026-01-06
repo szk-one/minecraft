@@ -1,3 +1,4 @@
+# 概要: Create向けに任意ブロックの外観を複製できるコピーキャット部品を網羅追加する装飾拡張。
 name = "Create: Copycats+"
 filename = "copycats-3.0.4+mc.1.21.1-neoforge.jar"
 side = "both"

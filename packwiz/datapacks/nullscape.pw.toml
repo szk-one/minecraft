@@ -1,3 +1,4 @@
+# 概要: エンドの地形高さとバイオームを刷新し荒涼とした超巨大浮島を探索させる世界生成改変。
 name = "Nullscape"
 filename = "Nullscape_1.21_v1.2.14.zip"
 side = "both"
