@@ -1,3 +1,4 @@
+# 概要: パーツ組み合わせで性能をカスタマイズできるツール・武器・防具を提供する装備MOD。
 name = "Silent Gear"
 filename = "silent-gear-1.21.1-neoforge-4.0.30.jar"
 side = "both"
