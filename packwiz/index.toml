@@ -106,6 +106,16 @@ hash = "ddc79fcde38a25173360d928ed69b5cc357aa10b010fc37e0429c426b28d9fcc"
 metafile = true
 
 [[files]]
+file = "mods/silent-gear.pw.toml"
+hash = "fd0fdb1d1acd8b582c5e3ef75877952d7b78f8b6453bb94dba2f68bac60c1017"
+metafile = true
+
+[[files]]
+file = "mods/silent-lib.pw.toml"
+hash = "40ecf884f979abc0c35c9674aa56822eb922ce63dc1ddfd1303076ccab0a434a"
+metafile = true
+
+[[files]]
 file = "mods/sophisticated-backpacks-create-integration.pw.toml"
 hash = "df99ef6ffac5c9e897cb39a9cd8549159e43025e01c9168e1ec419bbca695384"
 metafile = true
