@@ -31,8 +31,18 @@ hash = "97826828704acae1beea28b3ab403d2441c2bdfa14e58f525d2b4376184b008c"
 metafile = true
 
 [[files]]
+file = "mods/bookshelf.pw.toml"
+hash = "105896bd81709c51629f3950e53c41765bc413f6d44edef7e776db8eb8e544b2"
+metafile = true
+
+[[files]]
 file = "mods/clumps.pw.toml"
 hash = "6ae37c727d3bfbe006964cc094a7c571c0c516d46b7e26147ffaf984d70cbf72"
+metafile = true
+
+[[files]]
+file = "mods/controlling.pw.toml"
+hash = "42ffb6f5835250003da6ca3667ff751709ea295faee43b49c365b0f6c1e8f4d8"
 metafile = true
 
 [[files]]
@@ -71,8 +81,28 @@ hash = "7f02ff265c96a103bd044602ab48788520d364c22824a69a77da6f81dd984103"
 metafile = true
 
 [[files]]
+file = "mods/diagonal-fences.pw.toml"
+hash = "db153992e71c2c1ca7643ad93d11f1276cada2843879cd01909abef2f2ed9df9"
+metafile = true
+
+[[files]]
+file = "mods/diagonal-walls.pw.toml"
+hash = "36899ae409d7c9bf4a5b322328f3eba6c8de4812a4f8594140a4953b05d62f88"
+metafile = true
+
+[[files]]
+file = "mods/easy-anvils.pw.toml"
+hash = "541520814421d829976fbb2162e7a195b18e9d82ed3b3c8dc9c7fbc50b2cb491"
+metafile = true
+
+[[files]]
 file = "mods/emi.pw.toml"
 hash = "df8875a04a01ecd956b41fffb16fcbb0b625219a4c8f7fc9866b233e8fc5a05e"
+metafile = true
+
+[[files]]
+file = "mods/enchantment-descriptions.pw.toml"
+hash = "04cba5d12b1262ba3a1d89caae20c5e44a9010f050c549ff91f2661fb796dc7b"
 metafile = true
 
 [[files]]
@@ -96,6 +126,16 @@ hash = "748fda6e06280872a42259eea26312a65d65aa6554d917f44a3658854bda5d39"
 metafile = true
 
 [[files]]
+file = "mods/jade-addons.pw.toml"
+hash = "89420f657cec1038646f75531ae388e92d27c51c84b1f121e935ae5aecf995be"
+metafile = true
+
+[[files]]
+file = "mods/jade.pw.toml"
+hash = "e739b7355ab3cfba2e729f8f0b51eafc3d9c3afb19ee30ac7b311631610c5e66"
+metafile = true
+
+[[files]]
 file = "mods/jei.pw.toml"
 hash = "95b33d57bb6450d12130a94a85255cda5a6a208b2ae9b2e38bcf709d6945fb9e"
 metafile = true
@@ -116,8 +156,23 @@ hash = "ae86ce95fd8c6d3ff9b924b49beb7a272390ede057348645e6abef726473029e"
 metafile = true
 
 [[files]]
+file = "mods/lootr.pw.toml"
+hash = "6c8c188ec9cd847b4ce13aa6cde0b38bbf29476d9eaaf4b6bbebc1f22416ddce"
+metafile = true
+
+[[files]]
 file = "mods/modernfix.pw.toml"
 hash = "e8b121e7dd0d0dc6bee6a968e26c4c2f3cc2372157722bbdced899c62d372860"
+metafile = true
+
+[[files]]
+file = "mods/polymorph.pw.toml"
+hash = "8b725f1822c0feab9e51bef600f2ee6f4c26efbb55aa3ee9073a027f1f134202"
+metafile = true
+
+[[files]]
+file = "mods/prickle.pw.toml"
+hash = "eab2f56ff9135b3b7253ea5a73deae2f887e2876f5f0432936044a6e926937b4"
 metafile = true
 
 [[files]]
@@ -126,8 +181,18 @@ hash = "95b1de582ae2ce9d6e534ea9789ef7915a164648efcd788564aa6609e8deb531"
 metafile = true
 
 [[files]]
+file = "mods/puzzles-lib.pw.toml"
+hash = "804736be3ded2a6f89f44522b88d82636209ed203c234ea34b6d6ffdd9ecee54"
+metafile = true
+
+[[files]]
 file = "mods/saturn.pw.toml"
 hash = "ddc79fcde38a25173360d928ed69b5cc357aa10b010fc37e0429c426b28d9fcc"
+metafile = true
+
+[[files]]
+file = "mods/searchables.pw.toml"
+hash = "6c0fac550bb053ee2728144a28819835823dcc6d04ad7897750431fe55100e53"
 metafile = true
 
 [[files]]
