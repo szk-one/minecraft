@@ -31,6 +31,11 @@ hash = "97826828704acae1beea28b3ab403d2441c2bdfa14e58f525d2b4376184b008c"
 metafile = true
 
 [[files]]
+file = "mods/balm.pw.toml"
+hash = "a0f52f47c27d6ccdbee89735e459ff955ba09cdf499ef42bc901f8426be75253"
+metafile = true
+
+[[files]]
 file = "mods/bookshelf.pw.toml"
 hash = "105896bd81709c51629f3950e53c41765bc413f6d44edef7e776db8eb8e544b2"
 metafile = true
@@ -253,4 +258,9 @@ metafile = true
 [[files]]
 file = "mods/tenshilib.pw.toml"
 hash = "41b9eccff7a35a85444c3aad9a998353c5f720086f43e8c36dc2d3b4a9d142f3"
+metafile = true
+
+[[files]]
+file = "mods/waystones.pw.toml"
+hash = "aab0477b3088e321845e2ca11dc7480d2a032012016b60f40de84be8709921f6"
 metafile = true
