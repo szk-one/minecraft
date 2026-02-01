@@ -41,6 +41,11 @@ hash = "105896bd81709c51629f3950e53c41765bc413f6d44edef7e776db8eb8e544b2"
 metafile = true
 
 [[files]]
+file = "mods/cloth-config.pw.toml"
+hash = "22286fa216349c0767808903a0a38662857d2adee54950a18cbf26c167a06029"
+metafile = true
+
+[[files]]
 file = "mods/clumps.pw.toml"
 hash = "6ae37c727d3bfbe006964cc094a7c571c0c516d46b7e26147ffaf984d70cbf72"
 metafile = true
@@ -143,6 +148,11 @@ metafile = true
 [[files]]
 file = "mods/improved-mobs.pw.toml"
 hash = "748fda6e06280872a42259eea26312a65d65aa6554d917f44a3658854bda5d39"
+metafile = true
+
+[[files]]
+file = "mods/invmove.pw.toml"
+hash = "7f490cefaf85f70b2c0ef3b3ecf73fec1d357ac6786e593298e0240541b34f05"
 metafile = true
 
 [[files]]
