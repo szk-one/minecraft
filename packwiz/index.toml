@@ -91,6 +91,11 @@ hash = "36899ae409d7c9bf4a5b322328f3eba6c8de4812a4f8594140a4953b05d62f88"
 metafile = true
 
 [[files]]
+file = "mods/dynamic-fps.pw.toml"
+hash = "8bc57beb0d3d0c34a2ac8c50d70490623dd350ce62d0ccde9a16a1b000a514b1"
+metafile = true
+
+[[files]]
 file = "mods/easy-anvils.pw.toml"
 hash = "541520814421d829976fbb2162e7a195b18e9d82ed3b3c8dc9c7fbc50b2cb491"
 metafile = true
@@ -111,6 +116,11 @@ hash = "0bb3a092472cc820e42e83ac0aac97e52f8cb2920777b79788bb04dc1da0cebc"
 metafile = true
 
 [[files]]
+file = "mods/entityculling.pw.toml"
+hash = "840b796a400209ae1a80994a77ec67b8bcabe6d1f5ba96d4e066cce6bebc68c4"
+metafile = true
+
+[[files]]
 file = "mods/ferritecore.pw.toml"
 hash = "875e9067e6b573d857ea6524cbf7c9bcaa7a4fc129fe18b422dab88692ddbbaa"
 metafile = true
@@ -118,6 +128,11 @@ metafile = true
 [[files]]
 file = "mods/guard-villagers.pw.toml"
 hash = "7db4d6f071da73553f0a3d4ca115c89a24effb6c87e15d8f7cebc464239a89c8"
+metafile = true
+
+[[files]]
+file = "mods/immediatelyfast.pw.toml"
+hash = "0a340d62ec786133c1cc6f40d86655a77055461ad65390a8679be294279d6f94"
 metafile = true
 
 [[files]]
