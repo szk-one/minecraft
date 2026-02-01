@@ -81,6 +81,11 @@ hash = "7f02ff265c96a103bd044602ab48788520d364c22824a69a77da6f81dd984103"
 metafile = true
 
 [[files]]
+file = "mods/easy-anvils.pw.toml"
+hash = "541520814421d829976fbb2162e7a195b18e9d82ed3b3c8dc9c7fbc50b2cb491"
+metafile = true
+
+[[files]]
 file = "mods/emi.pw.toml"
 hash = "df8875a04a01ecd956b41fffb16fcbb0b625219a4c8f7fc9866b233e8fc5a05e"
 metafile = true
@@ -163,6 +168,11 @@ metafile = true
 [[files]]
 file = "mods/prometheus-exporter.pw.toml"
 hash = "95b1de582ae2ce9d6e534ea9789ef7915a164648efcd788564aa6609e8deb531"
+metafile = true
+
+[[files]]
+file = "mods/puzzles-lib.pw.toml"
+hash = "804736be3ded2a6f89f44522b88d82636209ed203c234ea34b6d6ffdd9ecee54"
 metafile = true
 
 [[files]]
