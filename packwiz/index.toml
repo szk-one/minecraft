@@ -31,6 +31,11 @@ hash = "97826828704acae1beea28b3ab403d2441c2bdfa14e58f525d2b4376184b008c"
 metafile = true
 
 [[files]]
+file = "mods/bookshelf.pw.toml"
+hash = "105896bd81709c51629f3950e53c41765bc413f6d44edef7e776db8eb8e544b2"
+metafile = true
+
+[[files]]
 file = "mods/clumps.pw.toml"
 hash = "6ae37c727d3bfbe006964cc094a7c571c0c516d46b7e26147ffaf984d70cbf72"
 metafile = true
@@ -73,6 +78,11 @@ metafile = true
 [[files]]
 file = "mods/emi.pw.toml"
 hash = "df8875a04a01ecd956b41fffb16fcbb0b625219a4c8f7fc9866b233e8fc5a05e"
+metafile = true
+
+[[files]]
+file = "mods/enchantment-descriptions.pw.toml"
+hash = "04cba5d12b1262ba3a1d89caae20c5e44a9010f050c549ff91f2661fb796dc7b"
 metafile = true
 
 [[files]]
@@ -128,6 +138,11 @@ metafile = true
 [[files]]
 file = "mods/modernfix.pw.toml"
 hash = "e8b121e7dd0d0dc6bee6a968e26c4c2f3cc2372157722bbdced899c62d372860"
+metafile = true
+
+[[files]]
+file = "mods/prickle.pw.toml"
+hash = "eab2f56ff9135b3b7253ea5a73deae2f887e2876f5f0432936044a6e926937b4"
 metafile = true
 
 [[files]]
