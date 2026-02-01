@@ -41,6 +41,11 @@ hash = "6ae37c727d3bfbe006964cc094a7c571c0c516d46b7e26147ffaf984d70cbf72"
 metafile = true
 
 [[files]]
+file = "mods/controlling.pw.toml"
+hash = "42ffb6f5835250003da6ca3667ff751709ea295faee43b49c365b0f6c1e8f4d8"
+metafile = true
+
+[[files]]
 file = "mods/copycats.pw.toml"
 hash = "470e949c4f01d769445ff5fd49534ae266bb427c49e16c25b2983299a46825cc"
 metafile = true
@@ -153,6 +158,11 @@ metafile = true
 [[files]]
 file = "mods/saturn.pw.toml"
 hash = "ddc79fcde38a25173360d928ed69b5cc357aa10b010fc37e0429c426b28d9fcc"
+metafile = true
+
+[[files]]
+file = "mods/searchables.pw.toml"
+hash = "6c0fac550bb053ee2728144a28819835823dcc6d04ad7897750431fe55100e53"
 metafile = true
 
 [[files]]
