@@ -1,11 +1,11 @@
 name = "SSR-create-defender"
-version = "1.0.0"
+version = "1.0.2"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "b0f000cde0d81c3bd18cb7a8029a271d88ac0423efdcb68a065b41073cb6dbad"
+hash = "8eecb417b5007cbcdd0c38af43129480386f59d483b56b157ddadf5c4fa45a9e"
 
 [versions]
 minecraft = "1.21.1"
