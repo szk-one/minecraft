@@ -1,0 +1,14 @@
+# 概要: リアルタイムマップとウェイポイント機能で探索と目的地管理を支援する地図MOD。
+name = "JourneyMap"
+filename = "journeymap-neoforge-1.21.1-6.0.0-beta.53.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "7820bd7f4dd2dbbd1026a54bbff98a51faa867f0"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7319284
+project-id = 32274

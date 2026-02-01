@@ -1,3 +1,4 @@
+# 概要: SilentChaos512製MODの共通機能やユーティリティを提供するライブラリMOD。
 name = "Silent Lib (silentlib)"
 filename = "silent-lib-1.21.1-neoforge-10.5.1.jar"
 side = "both"

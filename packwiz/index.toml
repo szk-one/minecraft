@@ -26,6 +26,11 @@ hash = "fa40e7c9879f4ad59dc466dca96e1f450395568d27c6a6f626047cefda8eaea9"
 metafile = true
 
 [[files]]
+file = "mods/appleskin.pw.toml"
+hash = "97826828704acae1beea28b3ab403d2441c2bdfa14e58f525d2b4376184b008c"
+metafile = true
+
+[[files]]
 file = "mods/clumps.pw.toml"
 hash = "6ae37c727d3bfbe006964cc094a7c571c0c516d46b7e26147ffaf984d70cbf72"
 metafile = true
@@ -66,6 +71,11 @@ hash = "7f02ff265c96a103bd044602ab48788520d364c22824a69a77da6f81dd984103"
 metafile = true
 
 [[files]]
+file = "mods/emi.pw.toml"
+hash = "df8875a04a01ecd956b41fffb16fcbb0b625219a4c8f7fc9866b233e8fc5a05e"
+metafile = true
+
+[[files]]
 file = "mods/enhanced-celestials.pw.toml"
 hash = "0bb3a092472cc820e42e83ac0aac97e52f8cb2920777b79788bb04dc1da0cebc"
 metafile = true
@@ -83,6 +93,21 @@ metafile = true
 [[files]]
 file = "mods/improved-mobs.pw.toml"
 hash = "748fda6e06280872a42259eea26312a65d65aa6554d917f44a3658854bda5d39"
+metafile = true
+
+[[files]]
+file = "mods/jei.pw.toml"
+hash = "95b33d57bb6450d12130a94a85255cda5a6a208b2ae9b2e38bcf709d6945fb9e"
+metafile = true
+
+[[files]]
+file = "mods/journeymap.pw.toml"
+hash = "32c6e8ff6e2d828f25753753274cef9fc19aa305371b2d3a0ee2d817697d2c10"
+metafile = true
+
+[[files]]
+file = "mods/just-enough-resources-jer.pw.toml"
+hash = "b12b8cb7b7d3448bdc2425a7f92effaaf287a2be88a9b796f2344cf29f51ce88"
 metafile = true
 
 [[files]]
@@ -107,12 +132,12 @@ metafile = true
 
 [[files]]
 file = "mods/silent-gear.pw.toml"
-hash = "fd0fdb1d1acd8b582c5e3ef75877952d7b78f8b6453bb94dba2f68bac60c1017"
+hash = "20d4f775424b157924e63ae90f2d9122d44015cbcc5e8ab11cbf2784c25b9cd9"
 metafile = true
 
 [[files]]
 file = "mods/silent-lib.pw.toml"
-hash = "40ecf884f979abc0c35c9674aa56822eb922ce63dc1ddfd1303076ccab0a434a"
+hash = "badac17a897e20bd72fef4597b15ff0e953adf9e922e170f64698a216da90fa9"
 metafile = true
 
 [[files]]
