@@ -9,6 +9,38 @@ file = "config/improvedmobs/equipment.json"
 hash = "06769e09669eef2e93ed06e905fdba44442035b10627d19b5c6e1c229c61c311"
 
 [[files]]
+file = "datapacks/enhanced-celestials-custom/data/enhancedcelestials/enhancedcelestials/lunar/event/blood_moon.json"
+hash = "176d4caeb6e5cd7cb3553be2c929b07d490d691e0c4a987bd3930f68467a70db"
+
+[[files]]
+file = "datapacks/enhanced-celestials-custom/data/enhancedcelestials/enhancedcelestials/lunar/event/blue_moon.json"
+hash = "176d4caeb6e5cd7cb3553be2c929b07d490d691e0c4a987bd3930f68467a70db"
+
+[[files]]
+file = "datapacks/enhanced-celestials-custom/data/enhancedcelestials/enhancedcelestials/lunar/event/harvest_moon.json"
+hash = "176d4caeb6e5cd7cb3553be2c929b07d490d691e0c4a987bd3930f68467a70db"
+
+[[files]]
+file = "datapacks/enhanced-celestials-custom/data/enhancedcelestials/enhancedcelestials/lunar/event/super_blood_moon.json"
+hash = "176d4caeb6e5cd7cb3553be2c929b07d490d691e0c4a987bd3930f68467a70db"
+
+[[files]]
+file = "datapacks/enhanced-celestials-custom/data/enhancedcelestials/enhancedcelestials/lunar/event/super_blue_moon.json"
+hash = "176d4caeb6e5cd7cb3553be2c929b07d490d691e0c4a987bd3930f68467a70db"
+
+[[files]]
+file = "datapacks/enhanced-celestials-custom/data/enhancedcelestials/enhancedcelestials/lunar/event/super_harvest_moon.json"
+hash = "176d4caeb6e5cd7cb3553be2c929b07d490d691e0c4a987bd3930f68467a70db"
+
+[[files]]
+file = "datapacks/enhanced-celestials-custom/data/enhancedcelestials/enhancedcelestials/lunar/event/super_moon.json"
+hash = "176d4caeb6e5cd7cb3553be2c929b07d490d691e0c4a987bd3930f68467a70db"
+
+[[files]]
+file = "datapacks/enhanced-celestials-custom/pack.mcmeta"
+hash = "60f57e00dbeb30c2af5b08fcd494293a80215b01ef923c673a5134ba4091d8d7"
+
+[[files]]
 file = "datapacks/incendium.pw.toml"
 hash = "b68d4abafcd790c6155531cdca3e3a22ff8c07dd6bd8991cad18ea1c28cfb5b5"
 metafile = true
