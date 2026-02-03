@@ -5,6 +5,10 @@ file = "config/improvedmobs/common.toml"
 hash = "bb01c7745ec3866975c9cefdbb6e8575252dc06f542d299bdefa8631cb7f58e1"
 
 [[files]]
+file = "config/improvedmobs/equipment.json"
+hash = "4e6fe5dd836d1c6af6b0c62fb81e55cdce804f57bd4743521d951899a30c9a64"
+
+[[files]]
 file = "datapacks/incendium.pw.toml"
 hash = "b68d4abafcd790c6155531cdca3e3a22ff8c07dd6bd8991cad18ea1c28cfb5b5"
 metafile = true
