@@ -1,3 +1,4 @@
+# 概要: ウィンドウ非アクティブ時にFPSと消費電力を自動削減する省電力最適化MOD。
 name = "Dynamic FPS"
 filename = "dynamic-fps-3.11.4+minecraft-1.21.0-neoforge.jar"
 side = "client"

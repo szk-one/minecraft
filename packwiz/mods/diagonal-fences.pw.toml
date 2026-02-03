@@ -1,3 +1,4 @@
+# 概要: フェンスが斜め設置で自然な曲線を描くようになり柔軟な建築が可能になる装飾MOD。
 name = "Diagonal Fences"
 filename = "DiagonalFences-v21.1.1-1.21.1-NeoForge.jar"
 side = "both"

@@ -1,3 +1,4 @@
+# 概要: MOD設定画面を簡単に構築できる設定API。多くのMODで採用されている必須ライブラリ。
 name = "Cloth Config API (Fabric/Forge/NeoForge)"
 filename = "cloth-config-15.0.140-neoforge.jar"
 side = "both"

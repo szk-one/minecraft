@@ -1,3 +1,4 @@
+# 概要: Jadeに追加の情報表示機能や対応MODの範囲を広げる拡張アドオン。
 name = "Jade Addons (Neo/Forge)"
 filename = "JadeAddons-1.21.1-NeoForge-6.1.0.jar"
 side = "both"

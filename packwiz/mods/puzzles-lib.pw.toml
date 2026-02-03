@@ -1,3 +1,4 @@
+# 概要: Fuzs製MOD群で共有される設定システムやユーティリティを提供するライブラリMOD。
 name = "Puzzles Lib"
 filename = "PuzzlesLib-v21.1.39-1.21.1-NeoForge.jar"
 side = "both"

@@ -1,3 +1,4 @@
+# 概要: エンチャントのツールチップに詳しい効果説明を追加し仕様理解を助ける情報MOD。
 name = "Enchantment Descriptions"
 filename = "enchdesc-neoforge-1.21.1-21.1.9.jar"
 side = "both"

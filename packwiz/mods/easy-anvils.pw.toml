@@ -1,3 +1,4 @@
+# 概要: 金床操作をUIから直接実行でき配置不要で素早い修繕が可能になる利便性MOD。
 name = "Easy Anvils"
 filename = "EasyAnvils-v21.1.0-1.21.1-NeoForge.jar"
 side = "both"

@@ -1,3 +1,4 @@
+# 概要: ウェイストーンを設置しテレポート可能な地点を増やせる移動効率化MOD。
 name = "Waystones"
 filename = "waystones-neoforge-1.21.1-21.1.25.jar"
 side = "both"

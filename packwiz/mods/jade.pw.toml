@@ -1,3 +1,4 @@
+# 概要: ブロックやエンティティの詳細情報をカーソル先に表示する定番情報表示MOD。
 name = "Jade 🔍"
 filename = "Jade-1.21.1-NeoForge-15.10.5.jar"
 side = "both"

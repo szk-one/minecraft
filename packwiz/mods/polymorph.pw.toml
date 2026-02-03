@@ -1,3 +1,4 @@
+# 概要: レシピ競合時に出力を選択できるようにしクラフトミスを防ぐ利便性MOD。
 name = "Polymorph (Fabric/Forge/Quilt)"
 filename = "polymorph-neoforge-1.1.0+1.21.1.jar"
 side = "both"

@@ -1,3 +1,4 @@
+# 概要: 描画システムを刷新してレンダリング速度を大幅に向上させる最適化MOD。
 name = "ImmediatelyFast"
 filename = "ImmediatelyFast-NeoForge-1.6.10+1.21.1.jar"
 side = "client"

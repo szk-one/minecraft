@@ -1,3 +1,4 @@
+# 概要: キー割り当てを一覧・検索・競合解決できる操作設定強化MOD。
 name = "Controlling"
 filename = "Controlling-neoforge-1.21.1-19.0.5.jar"
 side = "both"

@@ -1,3 +1,4 @@
+# 概要: チェストの中身をプレイヤー別に独立させ複数人でも戦利品を取り合わずに済むマルチ向けMOD。
 name = "Lootr (Forge & NeoForge)"
 filename = "lootr-neoforge-1.21.1-1.11.36.114.jar"
 side = "both"

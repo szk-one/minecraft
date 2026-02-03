@@ -1,3 +1,4 @@
+# 概要: インベントリ画面を開きながら移動できるようにする操作改善MOD。
 name = "InvMove"
 filename = "InvMove-0.9.3+1.21.1-NeoForge.jar"
 side = "both"

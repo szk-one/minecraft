@@ -1,3 +1,4 @@
+# 概要: エンティティ追跡の挙動を最適化しサーバー負荷を軽減するパフォーマンス改善MOD。
 name = "Prickle"
 filename = "prickle-neoforge-1.21.1-21.1.11.jar"
 side = "both"

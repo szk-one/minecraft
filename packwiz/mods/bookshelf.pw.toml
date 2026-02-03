@@ -1,3 +1,4 @@
+# 概要: Darkhax製MODに共通する機能とデータ処理を提供するライブラリMOD。
 name = "Bookshelf"
 filename = "bookshelf-neoforge-1.21.1-21.1.80.jar"
 side = "both"
