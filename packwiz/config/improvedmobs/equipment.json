@@ -111,56 +111,6 @@
       "value": "minecraft:wooden_sword",
       "weight": 8979,
       "quality": 11.216219
-    },
-    {
-      "value": "silentgear:axe",
-      "weight": 20454,
-      "quality": 2.7801957
-    },
-    {
-      "value": "silentgear:crossbow",
-      "weight": 5138,
-      "quality": 15.304007
-    },
-    {
-      "value": "silentgear:dagger",
-      "weight": 20454,
-      "quality": 2.7801957
-    },
-    {
-      "value": "silentgear:fishing_rod",
-      "weight": 6147,
-      "quality": 14.16944
-    },
-    {
-      "value": "silentgear:katana",
-      "weight": 20454,
-      "quality": 2.7801957
-    },
-    {
-      "value": "silentgear:knife",
-      "weight": 20454,
-      "quality": 2.7801957
-    },
-    {
-      "value": "silentgear:machete",
-      "weight": 20454,
-      "quality": 2.7801957
-    },
-    {
-      "value": "silentgear:saw",
-      "weight": 20454,
-      "quality": 2.7801957
-    },
-    {
-      "value": "silentgear:sword",
-      "weight": 20454,
-      "quality": 2.7801957
-    },
-    {
-      "value": "silentgear:trident",
-      "weight": 28420,
-      "quality": 0.25
     }
   ],
   "OFFHAND": [
@@ -207,21 +157,6 @@
       "value": "minecraft:tnt",
       "weight": 591,
       "quality": 3.4697804
-    },
-    {
-      "value": "silentgear:bow",
-      "weight": 927,
-      "quality": 2.577805
-    },
-    {
-      "value": "silentgear:shield",
-      "weight": 946,
-      "quality": 2.5303288
-    },
-    {
-      "value": "silentgear:slingshot",
-      "weight": 927,
-      "quality": 2.577805
     }
   ],
   "FEET": [
@@ -269,11 +204,6 @@
       "value": "minecraft:netherite_boots",
       "weight": 432,
       "quality": 8.342114
-    },
-    {
-      "value": "silentgear:boots",
-      "weight": 7085,
-      "quality": 0.25
     }
   ],
   "LEGS": [
@@ -311,11 +241,6 @@
       "value": "minecraft:netherite_leggings",
       "weight": 334,
       "quality": 235.66614
-    },
-    {
-      "value": "silentgear:leggings",
-      "weight": 20150,
-      "quality": 0.25
     }
   ],
   "CHEST": [
@@ -368,16 +293,6 @@
       "value": "minecraft:netherite_chestplate",
       "weight": 439,
       "quality": 6950.214
-    },
-    {
-      "value": "silentgear:chestplate",
-      "weight": 52841,
-      "quality": 3468.2683
-    },
-    {
-      "value": "silentgear:elytra",
-      "weight": 177855,
-      "quality": 0.25
     }
   ],
   "HEAD": [
@@ -435,11 +350,6 @@
       "value": "minecraft:turtle_helmet",
       "weight": 1239,
       "quality": 225.68494
-    },
-    {
-      "value": "silentgear:helmet",
-      "weight": 8618,
-      "quality": 124.62339
     }
   ]
 }
