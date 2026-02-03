@@ -219,7 +219,7 @@
 	"Offhand Item Chance" = "0.1 + min(difficulty * 0.3 / 250, 0.3)"
 	#(Expression): Chance for a mob to drop its items
 	#This ONLY applies to equipment added through this mod!
-	"Drop Chance" = "0"
+	"Drop Chance" = "min(difficulty * 0.5 / 250, 0.5)"
 	#(Expression): Chance for an equipment piece to be enchanted
 	"Enchanting Chance" = "0.2 + min(difficulty * 0.6 / 250, 0.6)"
 	#Specify enchanting levels according to difficulty. <difficulty;expression>

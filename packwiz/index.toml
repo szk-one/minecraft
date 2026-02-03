@@ -2,7 +2,7 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/improvedmobs/common.toml"
-hash = "83143d4bd458f3456841d0739d6f381617520a2691fa9545f7356cbf69514c37"
+hash = "bb01c7745ec3866975c9cefdbb6e8575252dc06f542d299bdefa8631cb7f58e1"
 
 [[files]]
 file = "datapacks/incendium.pw.toml"
