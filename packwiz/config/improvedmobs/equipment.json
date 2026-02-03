@@ -171,11 +171,6 @@
       "quality": 4.1699758
     },
     {
-      "value": "create:netherite_diving_boots",
-      "weight": 432,
-      "quality": 8.342114
-    },
-    {
       "value": "minecraft:chainmail_boots",
       "weight": 1919,
       "quality": 5.543989
@@ -255,11 +250,6 @@
       "quality": 6778.841
     },
     {
-      "value": "create:netherite_backtank",
-      "weight": 437,
-      "quality": 6950.3984
-    },
-    {
       "value": "minecraft:chainmail_chestplate",
       "weight": 1427,
       "quality": 6873.487
@@ -310,11 +300,6 @@
       "value": "create:goggles",
       "weight": 29007,
       "quality": 0.25
-    },
-    {
-      "value": "create:netherite_diving_helmet",
-      "weight": 531,
-      "quality": 236.94417
     },
     {
       "value": "minecraft:chainmail_helmet",
