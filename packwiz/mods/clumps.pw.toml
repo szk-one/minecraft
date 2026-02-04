@@ -1,14 +1,13 @@
-# 概要: 経験値オーブをまとめて吸着しラグと拾い漏れを抑える軽量化MOD。
 name = "Clumps"
-filename = "Clumps-neoforge-1.21.1-19.0.0.1.jar"
+filename = "Clumps-forge-1.20.1-12.0.0.4.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "fa2576297c7bd12b28aa7070e8141792bd66da4c"
+hash = "97cc669f68dbe812cb77cc3631339334fc28b877"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 5623731
+file-id = 5278538
 project-id = 256717

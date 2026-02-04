@@ -1,14 +1,13 @@
-# 概要: パーツ組み合わせで性能をカスタマイズできるツール・武器・防具を提供する装備MOD。
 name = "Silent Gear"
-filename = "silent-gear-1.21.1-neoforge-4.0.30.jar"
+filename = "silent-gear-1.20.1-3.6.7.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "e4207ac46808a0076bfb3d2fa9bb89cbde981383"
+hash = "fe4c1ec5ca037e884832a98f48362f7089a5de63"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 7254991
+file-id = 6939618
 project-id = 297039

@@ -1,14 +1,13 @@
-# 概要: 描画システムを刷新してレンダリング速度を大幅に向上させる最適化MOD。
 name = "ImmediatelyFast"
-filename = "ImmediatelyFast-NeoForge-1.6.10+1.21.1.jar"
-side = "client"
+filename = "ImmediatelyFast-NeoForge-1.5.4+1.20.4.jar"
+side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "f1f5cccd7cb59d875f44566b2e557ccecc8c33fb"
+hash = "bc4daa79bf95e7bb058d7e42042e07a1d0be8229"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 7537795
+file-id = 7537758
 project-id = 686911

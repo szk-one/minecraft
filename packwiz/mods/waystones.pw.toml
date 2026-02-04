@@ -1,14 +1,13 @@
-# 概要: ウェイストーンを設置しテレポート可能な地点を増やせる移動効率化MOD。
 name = "Waystones"
-filename = "waystones-neoforge-1.21.1-21.1.25.jar"
+filename = "waystones-forge-1.20-14.1.4.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "96a4fd659aa80af18a788bf18a6110df996417fd"
+hash = "baeb982796f0170db8bd8284225044cb3046a97f"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 7354464
+file-id = 5500759
 project-id = 245755

@@ -1,14 +1,13 @@
-# 概要: 読み込み時間短縮や各種ボトルネック修正をまとめたパフォーマンスパッチ。
 name = "ModernFix"
-filename = "modernfix-neoforge-5.25.1+mc1.21.1.jar"
+filename = "modernfix-forge-5.15.0+mc1.20.1.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "5407ee2d311f6f16773292fe22942a023a19677d"
+hash = "858abf884131d30e6c9c8a51e226b1bc6b83318a"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 7200212
+file-id = 5203332
 project-id = 790626
