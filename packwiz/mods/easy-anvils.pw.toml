@@ -1,14 +1,13 @@
-# 概要: 金床操作をUIから直接実行でき配置不要で素早い修繕が可能になる利便性MOD。
 name = "Easy Anvils"
-filename = "EasyAnvils-v21.1.0-1.21.1-NeoForge.jar"
+filename = "EasyAnvils-v8.0.2-1.20.1-Forge.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "376c02e44dfcb44b79a494b1dba87b2ffb24277f"
+hash = "d44a8b549b27713a92d59148729bf374ff3e25f0"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 5733955
+file-id = 5156621
 project-id = 682567

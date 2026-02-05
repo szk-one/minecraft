@@ -1,14 +1,13 @@
-# 概要: エンチャントのツールチップに詳しい効果説明を追加し仕様理解を助ける情報MOD。
 name = "Enchantment Descriptions"
-filename = "enchdesc-neoforge-1.21.1-21.1.9.jar"
+filename = "EnchantmentDescriptions-Forge-1.20.1-17.1.20.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "e4fa515c5deab3165f250f2a1297ac836d496064"
+hash = "7942d3bf21a5060fb070f0809bf43a165b163fb5"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 7039849
+file-id = 7336071
 project-id = 250419

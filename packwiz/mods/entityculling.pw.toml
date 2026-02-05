@@ -1,14 +1,13 @@
-# 概要: 視界外のエンティティ描画をスキップして重い場面でのFPSを改善する軽量化MOD。
 name = "Entity Culling Fabric/Forge"
-filename = "entityculling-neoforge-1.9.5-mc1.21.1.jar"
+filename = "entityculling-forge-1.9.5-mc1.20.1.jar"
 side = "client"
 
 [download]
 hash-format = "sha1"
-hash = "0b4a085c1b79c86d7054342123a0ce8deaa0b174"
+hash = "524be2ed63e9f131a17393ead67cd3fddc97ca2b"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 7396695
+file-id = 7396677
 project-id = 448233

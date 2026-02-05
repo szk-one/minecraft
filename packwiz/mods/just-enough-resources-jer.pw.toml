@@ -1,14 +1,13 @@
-# 概要: 鉱石分布やMobドロップ・村人取引をJEIに統合表示する資源情報拡張。
 name = "Just Enough Resources (JER)"
-filename = "JustEnoughResources-NeoForge-1.21.1-1.6.0.17.jar"
+filename = "JustEnoughResources-1.20.1-1.4.0.247.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "e739d69b2de31ca8c0cb4691ab08e823f153bc44"
+hash = "2747c58f439c37a01139d35cab59ca1a54114009"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 6506298
+file-id = 5057220
 project-id = 240630

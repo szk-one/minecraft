@@ -1,14 +1,13 @@
-# 概要: Jadeに追加の情報表示機能や対応MODの範囲を広げる拡張アドオン。
 name = "Jade Addons (Neo/Forge)"
-filename = "JadeAddons-1.21.1-NeoForge-6.1.0.jar"
+filename = "JadeAddons-1.20.1-Forge-5.5.0.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "d0aef07e67f9e2dd7ae68f9f27d845511d8eaff3"
+hash = "5e74e87f61cf05c18457f09dfa1cb70332b6b777"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 6315149
+file-id = 6274674
 project-id = 583345

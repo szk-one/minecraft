@@ -1,14 +1,13 @@
-# 概要: サーバーやクライアントの負荷状況を可視化するプロファイラMOD。
 name = "spark"
-filename = "spark-1.10.124-neoforge.jar"
+filename = "spark-1.10.53-forge.jar"
 side = "server"
 
 [download]
 hash-format = "sha1"
-hash = "9430cc2ab64ff89d698be593769fb9f9ee4efae6"
+hash = "231fb325368c0660954f47bfb03493f5246fa4d1"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 6225208
+file-id = 4738952
 project-id = 361579
