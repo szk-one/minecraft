@@ -1,9 +1,0 @@
-# 概要: ネザー全域に新バイオームと高難度構造・専用アイテムを追加する大規模ワールド拡張。
-name = "Incendium"
-filename = "Incendium_1.21_UNSUPPORTED_PORT_v5.4.4.zip"
-side = "both"
-
-[download]
-url = "https://cdn.modrinth.com/data/ZVzW5oNS/versions/pwe1kTJE/Incendium_1.21_UNSUPPORTED_PORT_v5.4.4.zip"
-hash-format = "sha256"
-hash = "6efe2a4f989ea912eb6939c3c20c76c7c4653cbd437cbb4b0d66e282efe6d722"

@@ -1,14 +1,13 @@
-# 概要: 壁ブロックを斜めに配置でき建築デザインの幅を広げる装飾MOD。
 name = "Diagonal Walls"
-filename = "DiagonalWalls-v21.1.2-1.21.1-NeoForge.jar"
+filename = "DiagonalWalls-v8.0.4-1.20.1-Forge.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "f2aed3ac68f5cc5e41ccc9d493f2706b0df53296"
+hash = "cada35009f4f268d1685be9ce888b610b1ae607d"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 5918894
+file-id = 5918171
 project-id = 969422

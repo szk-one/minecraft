@@ -1,14 +1,13 @@
-# 概要: アイテムとレシピを高速ブラウズし作成手順を即座に参照できる軽量レシピビューア。
 name = "EMI"
-filename = "emi-1.1.22+1.21.1+neoforge.jar"
+filename = "emi-1.1.22+1.20.1+forge.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "cbbd038194cd63249db185c53b1d50a1767f80a3"
+hash = "d8049d6ec86befcd100a0ff0fc8ebc289f735997"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 6420931
+file-id = 6420945
 project-id = 580555
