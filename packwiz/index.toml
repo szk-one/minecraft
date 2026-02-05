@@ -1,6 +1,14 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/improvedmobs/common.toml"
+hash = "0c284227394e0cd80fc63835099c80611bb2a169e201098caec9c6f943265374"
+
+[[files]]
+file = "config/improvedmobs/equipment.json"
+hash = "c66576946c3771ec2d3e9ccd07827be29afb3e4e2a3b941dba063ec39a64c06a"
+
+[[files]]
 file = "datapacks/incendium.pw.toml"
 hash = "03319ee1e38d7bc6439eea9184eef6802c47584c7b030a915d3616253b7faae8"
 metafile = true
@@ -136,6 +144,11 @@ hash = "5bd0506bc0be25116b234f2b5af9447f60d82ae1cb6c5be4e12d8841f6c2501c"
 metafile = true
 
 [[files]]
+file = "mods/geckolib.pw.toml"
+hash = "a1dba016bfd85fbabc5ff7c78f0302d3dd5b20026842231d6422947a7bb5f6f0"
+metafile = true
+
+[[files]]
 file = "mods/guard-villagers.pw.toml"
 hash = "6272eefdbdca4cc53c8171e84f3127830e13200bbe0a6dce84f5bc8985fd7129"
 metafile = true
@@ -188,6 +201,11 @@ metafile = true
 [[files]]
 file = "mods/modernfix.pw.toml"
 hash = "17523abe76f282db11e95a033e504c1da3f82ac23a42e169d6b1e4d59b6a18d6"
+metafile = true
+
+[[files]]
+file = "mods/playeranimator.pw.toml"
+hash = "b52622122c19a3894e62fc5506d7c3332d202504fd406d6718be646f979feb40"
 metafile = true
 
 [[files]]
@@ -253,6 +271,16 @@ metafile = true
 [[files]]
 file = "mods/spark.pw.toml"
 hash = "735935fb0f43b7556f601967421a1c9fac83f402940af1ce5481afb0f8a91363"
+metafile = true
+
+[[files]]
+file = "mods/swdm.pw.toml"
+hash = "6e68e719f3b02f033097339ae2ca208dc0249f2d4486f25f6072be6f987e4492"
+metafile = true
+
+[[files]]
+file = "mods/swem.pw.toml"
+hash = "b409c498b7a4c37be7ff6bb2c5e62749358f0cc6cae3314560f8069daf69c3d0"
 metafile = true
 
 [[files]]
