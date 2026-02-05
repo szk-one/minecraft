@@ -1,0 +1,8 @@
+name = "Incendium"
+filename = "Incendium_1.20_v5.3.5.zip"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/ZVzW5oNS/versions/b9pN4Twz/Incendium_1.20_v5.3.5.zip"
+hash-format = "sha256"
+hash = "0680feedf9c8791d13330580709eff7df3183a47864c834610e94c6e27b6c2e2"

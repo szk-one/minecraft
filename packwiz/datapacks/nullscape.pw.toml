@@ -1,0 +1,8 @@
+name = "Nullscape"
+filename = "Nullscape_1.20_v1.2.8.zip"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/LPjGiSO4/versions/ZMeTWsSm/Nullscape_1.20_v1.2.8.zip"
+hash-format = "sha256"
+hash = "106afc716e06b61f93a493c8c6e53df109f385185819395386549f762326a421"

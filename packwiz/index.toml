@@ -1,6 +1,26 @@
 hash-format = "sha256"
 
 [[files]]
+file = "datapacks/incendium.pw.toml"
+hash = "03319ee1e38d7bc6439eea9184eef6802c47584c7b030a915d3616253b7faae8"
+metafile = true
+
+[[files]]
+file = "datapacks/nullscape.pw.toml"
+hash = "450de5604beb051afcafac6159593286f545bdebb6c5cc04ffb35a9a14251cb5"
+metafile = true
+
+[[files]]
+file = "datapacks/terralith.pw.toml"
+hash = "888d2f2384bfe30e0416fbd0fcc34ac28ce333ec70115485176cb65e42936570"
+metafile = true
+
+[[files]]
+file = "datapacks/trek.pw.toml"
+hash = "5510c7572f01e43bb458171c7677b272773bc18a58ce660bb1a7a2304db7c566"
+metafile = true
+
+[[files]]
 file = "mods/alltheleaks.pw.toml"
 hash = "40bab1828ae2b4d755db64f1c887a2fe06171fad6ab54d4a1863ca5c30ff9b55"
 metafile = true
