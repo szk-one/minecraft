@@ -1,13 +1,13 @@
 name = "Bookshelf"
-filename = "Bookshelf-Forge-1.20.1-20.2.13.jar"
+filename = "bookshelf-neoforge-1.21.1-21.1.80.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "c53d9eb5ce9e8ef0f2ea9b11e478d84ce958c3e5"
+hash = "04faab5a3e3fde909601145ac7dd8d806087958d"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 5423987
+file-id = 7335846
 project-id = 228525

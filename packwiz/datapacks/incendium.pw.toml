@@ -1,8 +1,8 @@
 name = "Incendium"
-filename = "Incendium_1.20_v5.3.5.zip"
+filename = "Incendium_1.21_UNSUPPORTED_PORT_v5.4.4.zip"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/ZVzW5oNS/versions/b9pN4Twz/Incendium_1.20_v5.3.5.zip"
+url = "https://cdn.modrinth.com/data/ZVzW5oNS/versions/pwe1kTJE/Incendium_1.21_UNSUPPORTED_PORT_v5.4.4.zip"
 hash-format = "sha256"
-hash = "0680feedf9c8791d13330580709eff7df3183a47864c834610e94c6e27b6c2e2"
+hash = "6efe2a4f989ea912eb6939c3c20c76c7c4653cbd437cbb4b0d66e282efe6d722"
