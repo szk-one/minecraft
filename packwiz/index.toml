@@ -159,6 +159,11 @@ hash = "a1dba016bfd85fbabc5ff7c78f0302d3dd5b20026842231d6422947a7bb5f6f0"
 metafile = true
 
 [[files]]
+file = "mods/globalpacks.pw.toml"
+hash = "79e3ce5a162a613d8fcc4e7793838c3eb6c39b78901be5c27111242491bfc0bc"
+metafile = true
+
+[[files]]
 file = "mods/guard-villagers.pw.toml"
 hash = "6272eefdbdca4cc53c8171e84f3127830e13200bbe0a6dce84f5bc8985fd7129"
 metafile = true
