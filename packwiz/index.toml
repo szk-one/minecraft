@@ -6,7 +6,7 @@ hash = "0c284227394e0cd80fc63835099c80611bb2a169e201098caec9c6f943265374"
 
 [[files]]
 file = "config/improvedmobs/equipment.json"
-hash = "c66576946c3771ec2d3e9ccd07827be29afb3e4e2a3b941dba063ec39a64c06a"
+hash = "0b4bf42b5aaa0ad53d0f61a598efa9201d00865b277ef7613669140fcfc7580e"
 
 [[files]]
 file = "datapacks/incendium.pw.toml"

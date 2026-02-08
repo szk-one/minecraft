@@ -89,50 +89,6 @@
     "minecraft:wooden_sword": [
       3530,
       0.0127
-    ],
-    "silentgear:axe": [
-      3487,
-      0.016999999
-    ],
-    "silentgear:bow": [
-      1657,
-      2.3836782
-    ],
-    "silentgear:crossbow": [
-      2113,
-      1.784244
-    ],
-    "silentgear:dagger": [
-      3487,
-      0.016999999
-    ],
-    "silentgear:katana": [
-      3487,
-      0.016999999
-    ],
-    "silentgear:knife": [
-      3487,
-      0.016999999
-    ],
-    "silentgear:machete": [
-      3487,
-      0.016999999
-    ],
-    "silentgear:saw": [
-      3487,
-      0.016999999
-    ],
-    "silentgear:slingshot": [
-      1657,
-      2.3836782
-    ],
-    "silentgear:spear": [
-      3487,
-      0.016999999
-    ],
-    "silentgear:sword": [
-      3487,
-      0.016999999
     ]
   },
   "OFFHAND": {
@@ -151,10 +107,6 @@
     "minecraft:shield": [
       315,
       1.6255897
-    ],
-    "silentgear:shield": [
-      787,
-      1.0178697
     ]
   },
   "FEET": {
@@ -193,10 +145,6 @@
     "minecraft:netherite_boots": [
       54,
       1.9030677
-    ],
-    "silentgear:boots": [
-      1430,
-      0.025899999
     ]
   },
   "LEGS": {
@@ -227,10 +175,6 @@
     "minecraft:netherite_leggings": [
       54,
       1.9030677
-    ],
-    "silentgear:leggings": [
-      1436,
-      0.0253
     ]
   },
   "CHEST": {
@@ -269,10 +213,6 @@
     "minecraft:netherite_chestplate": [
       54,
       1.9030677
-    ],
-    "silentgear:chestplate": [
-      1438,
-      0.0251
     ]
   },
   "HEAD": {
@@ -315,10 +255,6 @@
     "minecraft:turtle_helmet": [
       793,
       0.948558
-    ],
-    "silentgear:helmet": [
-      1422,
-      0.026699997
     ]
   }
 }
