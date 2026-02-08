@@ -159,11 +159,6 @@ hash = "dff824171060c79b327a4880c2f0546c727a041a489ef3af643ec2dcd9cd0c48"
 metafile = true
 
 [[files]]
-file = "mods/geckolib.pw.toml"
-hash = "e448ed8448354d972dcd3ef7c46833e58de16147fe947a969538bf80efad6de9"
-metafile = true
-
-[[files]]
 file = "mods/globalpacks.pw.toml"
 hash = "5a9463a0e36cc8e6cdcbd6c2b616584dc6762b06b49860cc755fcfcf97de42d7"
 metafile = true
@@ -249,11 +244,6 @@ hash = "2bdee19bd39b4bd411d7c858a7978ca9d2bdda41c1cf15920ea6be0014663f79"
 metafile = true
 
 [[files]]
-file = "mods/playeranimator.pw.toml"
-hash = "5b30dafc9e96471978376ee010cec0ddf592377ac94192c9370cb37973e1e95f"
-metafile = true
-
-[[files]]
 file = "mods/polymorph.pw.toml"
 hash = "8b725f1822c0feab9e51bef600f2ee6f4c26efbb55aa3ee9073a027f1f134202"
 metafile = true
@@ -321,16 +311,6 @@ metafile = true
 [[files]]
 file = "mods/spark.pw.toml"
 hash = "302695f3a9a8e6aca31d1108da08172b96954f37be26040cce16716f860cd0eb"
-metafile = true
-
-[[files]]
-file = "mods/swdm.pw.toml"
-hash = "3fa981aceb89c3eebee8ab2e29a6a6f0aa657a00408700f69ed28d00539ba393"
-metafile = true
-
-[[files]]
-file = "mods/swem.pw.toml"
-hash = "12f0ee741e18584cad69f85a50ec69b2c7f5b100a9239b2302816e2a5dfbe341"
 metafile = true
 
 [[files]]
