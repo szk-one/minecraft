@@ -1,0 +1,13 @@
+name = "Bloodmoon Update"
+filename = "bloodmoon-1.20.1-1.4.1-forge-1.20.1.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "84b2192bfe08d6de0b1078770b1702fb4dcdfd6e"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 6599751
+project-id = 1239965

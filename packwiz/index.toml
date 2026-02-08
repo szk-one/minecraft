@@ -49,6 +49,11 @@ hash = "7f1f331dfd9739c82ffcc4a40675370a3eaa623cc91c12d0d1de944afca1cd15"
 metafile = true
 
 [[files]]
+file = "mods/bloodmoon-update.pw.toml"
+hash = "c74e5a22161f86a2206d739eb919e9ecb31391e92781219d649858d0fa869d49"
+metafile = true
+
+[[files]]
 file = "mods/bookshelf.pw.toml"
 hash = "058699e4832d0cf5396c5ea29244100f0c0e39a8d7aa5b64c2afdcc3cb8c8145"
 metafile = true
@@ -79,11 +84,6 @@ hash = "00bcb49250fa1f8e533a321cd650e8e57e3d7f7b6178e0f92c21b93736bfb6a8"
 metafile = true
 
 [[files]]
-file = "mods/corgilib.pw.toml"
-hash = "28053b4a334c4079b5d4c7ea2d3b8d48f8fa61420498f1bed0ff83cd316bbba0"
-metafile = true
-
-[[files]]
 file = "mods/create-connected.pw.toml"
 hash = "98528535e9a67263a4ef360149800983126a697d2a218090e58da5c01217560a"
 metafile = true
@@ -96,11 +96,6 @@ metafile = true
 [[files]]
 file = "mods/create.pw.toml"
 hash = "9d7971a7af2ff4a96a0e5aede76f9cf8dc978da601e2754f79d6ec8631125bb9"
-metafile = true
-
-[[files]]
-file = "mods/data-anchor.pw.toml"
-hash = "acb7ebe72eeb476a26e5777cbbbad0a270db8ff85de0aa417be8e1228d26e2f4"
 metafile = true
 
 [[files]]
@@ -131,11 +126,6 @@ metafile = true
 [[files]]
 file = "mods/enchantment-descriptions.pw.toml"
 hash = "a6a4662e99c4013864ac4f6a388a3dd98c2ad715f7bd4651c181fac58a6d7ea8"
-metafile = true
-
-[[files]]
-file = "mods/enhanced-celestials.pw.toml"
-hash = "885221a000410ecbababafdbc18cc530c911ed86346dee14706df70dcc728030"
 metafile = true
 
 [[files]]
