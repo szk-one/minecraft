@@ -1,8 +1,0 @@
-name = "Terralith"
-filename = "Terralith_1.20_v2.5.4.zip"
-side = "both"
-
-[download]
-url = "https://cdn.modrinth.com/data/8oi3bsk5/versions/YFeeBgIL/Terralith_1.20_v2.5.4.zip"
-hash-format = "sha256"
-hash = "f6822d4dc50c7e8e4d3dc0a7700c623a6de9a9df723a1b6c23075a5b2df860cc"
