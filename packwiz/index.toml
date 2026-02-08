@@ -1,6 +1,14 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/improvedmobs/common.toml"
+hash = "bb01c7745ec3866975c9cefdbb6e8575252dc06f542d299bdefa8631cb7f58e1"
+
+[[files]]
+file = "config/improvedmobs/equipment.json"
+hash = "3a14d5766743da39f516cd94fb97fe4c207a19b1cc8e41fff9d7d5528942cb60"
+
+[[files]]
 file = "datapacks/incendium.pw.toml"
 hash = "316451db132efc659119de2e9243876e5bb0b5af5e046248f946958dbf87cf2c"
 metafile = true
