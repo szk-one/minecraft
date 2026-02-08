@@ -1,0 +1,8 @@
+name = "Create: Dreams n' Desires"
+filename = "DnDesires-1.21.1-2.2d-BETA.jar"
+side = "both"
+
+[download]
+url = "https://mediafilez.forgecdn.net/files/7287/681/DnDesires-1.21.1-2.2d-BETA.jar"
+hash-format = "sha256"
+hash = "8718c117ba98e7fd92312a73b37f20fc8cbfac800963bc5ced4eb49ccdb11330"
