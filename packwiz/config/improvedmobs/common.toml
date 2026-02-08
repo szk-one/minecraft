@@ -56,7 +56,51 @@
 	#<#minecraft:raiders|ATTRIBUTES> will add all entities in the raiders tag to everything except attributes
 	#<minecraft:sheep|ATTRIBUTES> will add sheep to everything except attributes
 	#<minecraft> disables everything for all minecraft mobs
-	"Entity Configs" = ["minecraft:cod", "minecraft:donkey", "minecraft:squid", "minecraft:glow_squid", "minecraft:mule", "minecraft:skeleton_horse", "minecraft:sniffer", "minecraft:strider", "minecraft:trader_llama", "minecraft:parrot", "minecraft:cow", "minecraft:zombie_horse", "minecraft:camel", "minecraft:horse", "minecraft:bee", "minecraft:polar_bear", "minecraft:cat", "minecraft:pufferfish", "minecraft:bat", "minecraft:wandering_trader", "guardvillagers:guard", "minecraft:salmon", "minecraft:fox", "minecraft:llama", "minecraft:pig", "minecraft:allay", "minecraft:frog", "minecraft:iron_golem", "minecraft:tropical_fish", "minecraft:turtle", "minecraft:sheep", "minecraft:snow_golem", "minecraft:mooshroom", "minecraft:villager", "minecraft:ocelot", "minecraft:tadpole", "minecraft:goat", "minecraft:dolphin", "minecraft:chicken", "minecraft:wolf", "minecraft:panda", "minecraft:rabbit", "minecraft:axolotl"]
+	"Entity Configs" = [
+		"minecraft:cod",
+		"minecraft:donkey",
+		"minecraft:squid",
+		"minecraft:glow_squid",
+		"minecraft:mule",
+		"minecraft:skeleton_horse",
+		"minecraft:sniffer",
+		"minecraft:strider",
+		"minecraft:trader_llama",
+		"minecraft:parrot",
+		"minecraft:cow",
+		"minecraft:zombie_horse",
+		"minecraft:camel",
+		"minecraft:horse",
+		"minecraft:bee",
+		"minecraft:polar_bear",
+		"minecraft:cat",
+		"minecraft:pufferfish",
+		"minecraft:bat",
+		"minecraft:wandering_trader",
+		"guardvillagers:guard",
+		"minecraft:salmon",
+		"minecraft:fox",
+		"minecraft:llama",
+		"minecraft:pig",
+		"minecraft:allay",
+		"minecraft:frog",
+		"minecraft:iron_golem",
+		"minecraft:tropical_fish",
+		"minecraft:turtle",
+		"minecraft:sheep",
+		"minecraft:snow_golem",
+		"minecraft:mooshroom",
+		"minecraft:villager",
+		"minecraft:ocelot",
+		"minecraft:tadpole",
+		"minecraft:goat",
+		"minecraft:dolphin",
+		"minecraft:chicken",
+		"minecraft:wolf",
+		"minecraft:panda",
+		"minecraft:rabbit",
+		"minecraft:axolotl"
+	]
 	#Any of the following 
 	#[ATTRIBUTES, ARMOR, HELDITEMS, BLOCKBREAK, USEITEM, LADDER, STEAL, GUARDIAN, PARROT, TARGETVILLAGER, NEUTRALAGGRO, PEHKUI]
 	#added here will disable that feature completely.
