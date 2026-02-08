@@ -1,0 +1,8 @@
+name = "Trek"
+filename = "Trek 1.19-1.21.11 B0.5.1.2.zip"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/h2jngREY/versions/83BCs8t6/Trek%201.19-1.21.11%20B0.5.1.2.zip"
+hash-format = "sha256"
+hash = "f15c5674121197a3c20d646466e6b9859eba100706999542716732996357ac06"
