@@ -99,7 +99,13 @@
 		"minecraft:wolf",
 		"minecraft:panda",
 		"minecraft:rabbit",
-		"minecraft:axolotl"
+		"minecraft:axolotl",
+		"swem:horse",
+		"swem:pony",
+		"swem:donkey",
+		"swem:mule",
+		"swem:skeleton_horse",
+		"swem:zombie_horse"
 	]
 	#Any of the following 
 	#[ATTRIBUTES, ARMOR, HELDITEMS, BLOCKBREAK, USEITEM, LADDER, STEAL, GUARDIAN, PARROT, TARGETVILLAGER, NEUTRALAGGRO, PEHKUI]
