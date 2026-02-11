@@ -60,7 +60,7 @@ resource "google_compute_disk" "mc_data_disk" {
 resource "google_compute_instance" "mc_server" {
   project = var.project_id
   name = "mc-server"
-  machine_type = "e2-standard-2"
+  machine_type = "n2-standard-4"
   zone = var.zone
   tags = ["mc-server"]
   metadata_startup_script = templatefile(
