@@ -61,7 +61,7 @@
 	#[ATTRIBUTES, ARMOR, HELDITEMS, BLOCKBREAK, USEITEM, LADDER, STEAL, GUARDIAN, FLYING, TARGETVILLAGER, NEUTRALAGGRO]
 	#added here will disable that feature completely.
 	#E.g. ["GUARDIAN"] will disable the guardian feature
-	"Feature Blacklist" = []
+	"Feature Blacklist" = ["STEAL"]
 	#Mods can override this now with a datapack! Check for the message 'Following entity overrides are loaded' in your logs to see any overrides
 	#Entities added here will be blacklisted from that feature. Usage:
 	#<entity registry name | namespace | #tag> followed by any of:
@@ -154,7 +154,7 @@
 	#(Expression): The speed modifier for breaking blocks
 	"Breaking Speed Modifier" = "1"
 	#(Expression): Chance for a mob to be able to steal items from inventory blocks
-	"Stealer Chance" = "1"
+	"Stealer Chance" = "0"
 	#Difficulty at which mobs are able to steal items
 	# Default: 0.0
 	# Range: 0.0 ~ 1.7976931348623157E308
