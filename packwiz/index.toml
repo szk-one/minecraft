@@ -2,7 +2,7 @@ hash-format = "sha256"
 
 [[files]]
 file = "config/improvedmobs/common.toml"
-hash = "bd49850f6e5a71649aeaa4405a11bc0d1ee677a57c155087a9b390a18e00f640"
+hash = "fe0d1cc6076f8dad1640ab17037814c57c590a17f1ce72ab6c528f5a6fd69e1d"
 
 [[files]]
 file = "config/improvedmobs/equipment.json"
