@@ -10,22 +10,22 @@ hash = "3a14d5766743da39f516cd94fb97fe4c207a19b1cc8e41fff9d7d5528942cb60"
 
 [[files]]
 file = "datapacks/incendium.pw.toml"
-hash = "316451db132efc659119de2e9243876e5bb0b5af5e046248f946958dbf87cf2c"
+hash = "faf34c1b8e10fc53884ec1c24a5375266877a98b7505ee1d022886b903f9a7fd"
 metafile = true
 
 [[files]]
 file = "datapacks/nullscape.pw.toml"
-hash = "336ad19beaf2e7d1420a0e97f3a53a087851dbb58d328e8c4a49c227bc4d3be7"
+hash = "2ab2ed57587d324fc2152c6207667cfdcde24eb4121ff7a0c03edc0ef4b61b78"
 metafile = true
 
 [[files]]
 file = "datapacks/terralith.pw.toml"
-hash = "4c24b5e20f6a1718822c1541029349b03ac72bfcd0ee8e5a6b42775bf8c80f09"
+hash = "d9ef73a7e1dddb9e463c9d77c3fad798dccfe609f0aecaa28e20349f3af4497f"
 metafile = true
 
 [[files]]
 file = "datapacks/trek.pw.toml"
-hash = "5510c7572f01e43bb458171c7677b272773bc18a58ce660bb1a7a2304db7c566"
+hash = "5e637aa7709f2d643d0247cdaebe1267c36c93f93bb53fbda4c69bfb652d866c"
 metafile = true
 
 [[files]]

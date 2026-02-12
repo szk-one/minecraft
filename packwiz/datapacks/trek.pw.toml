@@ -1,6 +1,6 @@
 name = "Trek"
 filename = "Trek 1.19-1.21.11 B0.5.1.2.zip"
-side = "both"
+side = "client"
 
 [download]
 url = "https://cdn.modrinth.com/data/h2jngREY/versions/83BCs8t6/Trek%201.19-1.21.11%20B0.5.1.2.zip"

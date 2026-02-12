@@ -1,6 +1,6 @@
 name = "Incendium"
 filename = "Incendium_1.21_UNSUPPORTED_PORT_v5.4.4.zip"
-side = "both"
+side = "client"
 
 [download]
 url = "https://cdn.modrinth.com/data/ZVzW5oNS/versions/pwe1kTJE/Incendium_1.21_UNSUPPORTED_PORT_v5.4.4.zip"
