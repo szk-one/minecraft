@@ -171,7 +171,7 @@
 	#(Expression): Chance for mobs to be able to summon an aquatic mount
 	"Guardian Chance" = "0.5"
 	#(Expression): Chance for mobs to be able to summon a flying mount
-	"Flying Chance" = "0.5"
+	"Flying Chance" = "0.1"
 	#Set this to true to allow tnt thrown by mobs to destroy blocks
 	"TNT Block Destruction" = false
 	#(Expression): Chance for a mob to ignore line of sight
@@ -208,7 +208,7 @@
 	#Some special names are BOW, TRIDEN, CROSSBOW refering to every bow/trident/crossbow item (So you dont need to type e.g. every bow item)
 	"Entity Item Use Blacklist" = ["minecraft:skeleton;BOW", "minecraft:wither_skeleton;BOW", "minecraft:stray;BOW", "minecraft:illusioner;BOW", "minecraft:drowned;TRIDENT", "minecraft:piglin;CROSSBOW", "minecraft:pillager;CROSSBOW", "minecraft:snow_golem;minecraft:snowball"]
 	#(Expression): Chance for a mob to have a piece of armor
-	"Equipment Chance" = "0.1 + min(difficulty * 0.8 / 250, 0.8)"
+	"Equipment Chance" = "0.2 + min(difficulty * 0.8 / 250, 0.8)"
 	#(Expression): Chance for a mob to have additional pieces of armor
 	"Additional Equipment Chance" = "0.3 + min(difficulty * 0.6 / 250, 0.6)"
 	#(Expression): Chance for an equipment to have a random armor trim

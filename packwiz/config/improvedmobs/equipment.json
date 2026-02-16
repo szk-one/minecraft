@@ -73,11 +73,6 @@
       "quality": 17.300673
     },
     {
-      "value": "minecraft:lava_bucket",
-      "weight": 3041,
-      "quality": 17.803299
-    },
-    {
       "value": "minecraft:netherite_axe",
       "weight": 833,
       "quality": 20.63865
@@ -152,11 +147,6 @@
       },
       "weight": 856,
       "quality": 2.7556605
-    },
-    {
-      "value": "minecraft:tnt",
-      "weight": 591,
-      "quality": 3.4697804
     }
   ],
   "FEET": [
