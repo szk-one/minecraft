@@ -10,7 +10,9 @@ locals {
     "iamcredentials.googleapis.com",
     # Compute Engine
     "compute.googleapis.com",
+    # 監視 (Ops Agent -> Cloud Monitoring / Cloud Logging)
     "logging.googleapis.com",
+    "monitoring.googleapis.com",
   ])
 }
 

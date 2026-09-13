@@ -2,6 +2,18 @@ variable "project_id" {}
 variable "region" {}
 variable "zone" {}
 
+variable "machine_type" {
+  description = "Minecraft サーバー VM のマシンタイプ。監視スタックを VM から降ろしたため、メモリを削ったタイプに落とせる。"
+  type        = string
+  default     = "n2-standard-4"
+}
+
+variable "mc_memory" {
+  description = "Minecraft サーバーに割り当てる JVM ヒープ。machine_type のメモリより十分小さい値にすること。"
+  type        = string
+  default     = "10G"
+}
+
 variable "mc_allowed_source_ranges" {
   description = "CIDR ranges allowed to access Minecraft server"
   type = list(string)
@@ -21,20 +33,27 @@ variable "rcon_password" {
   default     = ""
 }
 
-variable "monitoring_allowed_source_ranges" {
-  description = "Prometheus/Grafana のアクセスを許可する CIDR 範囲"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-}
-
-variable "grafana_admin_password" {
-  description = "Grafana の管理者パスワード。空の場合は起動スクリプトで自動生成します。"
-  type        = string
-  default     = ""
-}
-
 variable "discord_webhook_url" {
   description = "サーバー起動通知を送信する Discord Webhook の URL"
   type        = string
   default     = ""
+}
+
+variable "metrics_scrape_interval" {
+  description = "Ops Agent が Minecraft の Prometheus エンドポイントを取得する間隔。短くすると Cloud Monitoring の取り込み課金が増える。"
+  type        = string
+  default     = "60s"
+
+  validation {
+    # Ops Agent の下限は 10 秒。これを下回る値は黙って 10 秒に切り上げられるうえ、
+    # 書式ミスは Ops Agent が起動時に失敗するまで気づけないので apply 時に弾く。
+    condition     = can(regex("^[0-9]+s$", var.metrics_scrape_interval)) && tonumber(trimsuffix(var.metrics_scrape_interval, "s")) >= 10
+    error_message = "metrics_scrape_interval は秒単位の文字列 (例: \"60s\") で、Ops Agent の下限である 10 秒以上を指定してください。"
+  }
+}
+
+variable "purge_legacy_monitoring_data" {
+  description = "true にすると、旧 Prometheus / Grafana のデータディレクトリを起動スクリプトが削除してデータディスクを解放します。"
+  type        = bool
+  default     = false
 }

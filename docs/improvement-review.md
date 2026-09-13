@@ -12,7 +12,7 @@
 | --- | --- |
 | VM | `n2-standard-4` (4vCPU/16GB)、**legacy preemptible**、`us-central1-a`、24/7 稼働 |
 | ディスク | boot 10GB + data 10GB、どちらも `pd-standard` |
-| 同居サービス | Minecraft (NeoForge 1.21.1 / heap 10G) + mc-backup + Prometheus + node-exporter + Grafana |
+| 同居サービス | Minecraft (NeoForge 1.21.1 / heap 10G) + mc-backup + Ops Agent<br>（Prometheus / node-exporter / Grafana は [E](#e-監視スタックの整理-対応済み) で削除済み） |
 | Mod 管理 | packwiz、**60 件すべて CurseForge ソース**、`side` は 61 件中 56 件が `both` |
 | CI | `packwiz/` を GitHub Pages にそのままアップロードするのみ（`packwiz refresh` なし） |
 | Terraform | プロバイダ未固定 / リモート state なし / lock ファイル未コミット |
@@ -37,7 +37,7 @@
 
 ### A. 最優先: `preemptible` → Spot VM（コスト同額・リスクなし・即効）
 
-`google/compute_engine/main.tf:96` がレガシーの preemptible 設定になっている。
+`google/compute_engine/main.tf:122` がレガシーの preemptible 設定になっている。
 Spot と料金は同じだが、**preemptible は 24 時間で強制停止**される。Spot にはその上限がない。
 
 ```hcl
@@ -119,15 +119,23 @@ access_config {
 
 ---
 
-### E. 監視スタックの整理
+### E. 監視スタックの整理 【対応済み】
+
+> **対応済み**: Cloud Monitoring に寄せる形で実装した。詳細は [監視構成ドキュメント](monitoring.md) を参照。
 
 Prometheus + Grafana + node-exporter の常時稼働が RAM 0.5〜1GB とディスク IO を消費し、
-**マシンサイズを押し上げる要因**になっている。
+**マシンサイズを押し上げる要因**になっていた。
 
-「たまに見る」用途なら以下のいずれかで、4vCPU/8GB クラスまで落とせる余地が出る。
+「たまに見る」用途なので、3 コンテナを削除して **Ops Agent + Cloud Monitoring** に集約した。
 
-- Grafana を落として Grafana Cloud 無料枠へ `remote_write`
-- Cloud Monitoring に寄せる
+- ホストメトリクス: Ops Agent の `hostmetrics`（node-exporter の代替）
+- Minecraft メトリクス: Ops Agent の `prometheus` receiver が `localhost:19565` を scrape
+- 可視化: Cloud Monitoring ダッシュボード「Minecraft Overview」（Grafana ダッシュボードを移植）
+- サーバーログ: Cloud Logging へ転送
+
+これで RAM 0.5〜1GB が空き、**C のダウンサイジングが `machine_type` / `mc_memory` 変数の
+変更だけで行える**状態になった。あわせて 3-1（3000/9090 の全開放）と
+3-3 の Grafana パスワード平文問題も解消している。
 
 ---
 
@@ -224,7 +232,7 @@ Spot の再起動ループ等で暴走した際の保険として入れておく
 #### datapack が二重管理
 
 `packwiz/datapacks/` の 4 ファイルと
-`google/compute_engine/templates/startup.sh.tftpl:793` の `DATAPACKS` 環境変数に、
+`google/compute_engine/templates/startup.sh.tftpl:173` の `DATAPACKS` 環境変数に、
 同じ 4 つの URL とバージョンが書かれている。片方だけ更新すると client/server でズレる。
 
 #### `mod-list.html` の「概要」列が機能していない
@@ -251,10 +259,11 @@ Spot の再起動ループ等で暴走した際の保険として入れておく
 
 ### 重要度: 高
 
-#### 3-1. Prometheus (9090) が `0.0.0.0/0` に全開かつ認証なし
+#### 3-1. Prometheus (9090) が `0.0.0.0/0` に全開かつ認証なし 【解消済み】
 
-`google/compute_engine/main.tf:26-38`。誰でもメトリクスを読める。Grafana (3000) も同様。
-`monitoring_allowed_source_ranges` を絞るか、IAP / SSH トンネル経由にする。
+誰でもメトリクスを読める状態だった（Grafana 3000 も同様）。
+**E の対応で `mc-allow-monitoring` ファイアウォールごと削除**し、公開ポートは 25565 のみになった。
+メトリクスエンドポイントは `127.0.0.1:19565` にだけ公開し、Ops Agent がホストから読む。
 
 #### 3-2. Spot の猶予は 30 秒なのに `stop --timeout 120`
 
@@ -264,10 +273,11 @@ Preemption 時の shutdown script は **30 秒で打ち切られる**ため、�
 
 対策: RCON で `save-all flush` → `stop` を先に撃ち、timeout は 25 秒程度にする。
 
-#### 3-3. RCON / Grafana パスワードがインスタンスメタデータに平文
+#### 3-3. RCON / Grafana パスワードがインスタンスメタデータに平文（RCON のみ残存）
 
 startup script に埋め込まれるため、`compute.instances.get` 権限を持つ人と、
 VM 上の任意のプロセス（メタデータサーバ経由）から読める。
+**Grafana パスワードは E の対応で消滅**したが、RCON パスワードは依然として平文。
 
 加えて `variable "rcon_password"` に `sensitive = true` が付いておらず、plan 出力に出る。
 Secret Manager 参照が本筋。
@@ -292,7 +302,7 @@ itzg が 1.21.1 の最新を拾う。**クライアントとサーバーで NeoF
 
 #### 3-7. 起動のたびに Docker を再インストール
 
-`google/compute_engine/templates/startup.sh.tftpl:101-113`。
+`google/compute_engine/templates/startup.sh.tftpl:80-92`。
 Spot は再起動が頻繁なので、毎回数分の起動遅延になる。
 `command -v docker` でガードするか、Packer でカスタムイメージを焼く。
 
@@ -309,13 +319,15 @@ data disk に `resource_policies` が付いていない。
 - `services` に `iam.googleapis.com` と `iamcredentials.googleapis.com` が**重複記述**（`toset` で吸収されるため無害）
 - `time_sleep.wait_30_seconds` と `data.google_project.current` は**どこからも参照されていない dead code**
 
-#### 3-10. `output` が一切ない
+#### 3-10. `output` が一切ない 【解消済み】
 
-外部 IP を知るのにコンソールを見る必要がある。
+外部 IP を知るのにコンソールを見る必要があった。
+E の対応で `mc_server_external_ip` と `monitoring_dashboard_url` を追加した。
 
-#### 3-11. ハードコードされた値
+#### 3-11. ハードコードされた値（一部解消）
 
-`OPS: "Prog24"` / `VERSION` / `MEMORY` がテンプレートに直書きで、変数化されていない。
+`OPS: "Prog24"` / `VERSION` がテンプレートに直書きのまま。
+`MEMORY` と `machine_type` は E の対応で変数化済み（`mc_memory` / `machine_type`）。
 
 ---
 
@@ -328,7 +340,9 @@ data disk に `resource_policies` が付いていない。
 | 3 | **3-1 / 3-2 / 3-3 の修正** | セキュリティ・データ保全 | 小〜中 |
 | 4 | **C. マシンタイプ見直し** | コスト約半額 | 中（Arm 検証） |
 | 5 | **2-(a) packwiz CI 自動化** | パック破損の予防 | 小 |
-| 6 | D / E / F / G、2-(b) / 2-(c) | 継続改善 | 中 |
+| 6 | D / F / G、2-(b) / 2-(c) | 継続改善 | 中 |
+
+> **E（監視スタックの整理）は対応済み** → [監視構成ドキュメント](monitoring.md)
 
 ---
 

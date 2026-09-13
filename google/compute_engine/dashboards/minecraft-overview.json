@@ -1,0 +1,346 @@
+{
+  "displayName": "Minecraft Overview",
+  "mosaicLayout": {
+    "columns": 12,
+    "tiles": [
+      {
+        "xPos": 0,
+        "yPos": 0,
+        "width": 3,
+        "height": 3,
+        "widget": {
+          "title": "現在のTPS",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "prometheusQuery": "clamp_max(1 / (sum(rate(mc_server_tick_seconds_sum[5m])) / sum(rate(mc_server_tick_seconds_count[5m]))), 20)",
+              "unitOverride": "1"
+            },
+            "gaugeView": {
+              "lowerBound": 0,
+              "upperBound": 20
+            },
+            "thresholds": [
+              {
+                "value": 18,
+                "color": "YELLOW",
+                "direction": "BELOW"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "xPos": 3,
+        "yPos": 0,
+        "width": 3,
+        "height": 3,
+        "widget": {
+          "title": "接続プレイヤー数",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "prometheusQuery": "count(mc_player_list) or vector(0)",
+              "unitOverride": "1"
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 6,
+        "yPos": 0,
+        "width": 3,
+        "height": 3,
+        "widget": {
+          "title": "読み込みチャンク数",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "prometheusQuery": "sum(mc_dimension_chunks_loaded) or vector(0)",
+              "unitOverride": "1"
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [
+              {
+                "value": 2000,
+                "color": "YELLOW",
+                "direction": "ABOVE"
+              },
+              {
+                "value": 4000,
+                "color": "RED",
+                "direction": "ABOVE"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "xPos": 9,
+        "yPos": 0,
+        "width": 3,
+        "height": 3,
+        "widget": {
+          "title": "エンティティ数",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "prometheusQuery": "sum(mc_entities_total) or vector(0)",
+              "unitOverride": "1"
+            },
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [
+              {
+                "value": 500,
+                "color": "YELLOW",
+                "direction": "ABOVE"
+              },
+              {
+                "value": 800,
+                "color": "RED",
+                "direction": "ABOVE"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "xPos": 0,
+        "yPos": 3,
+        "width": 6,
+        "height": 4,
+        "widget": {
+          "title": "TPS 推移",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "clamp_max(1 / (sum(rate(mc_server_tick_seconds_sum[5m])) / sum(rate(mc_server_tick_seconds_count[5m]))), 20)",
+                  "unitOverride": "1"
+                },
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "legendTemplate": "TPS"
+              }
+            ],
+            "yAxis": {
+              "label": "TPS",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 6,
+        "yPos": 3,
+        "width": 6,
+        "height": 4,
+        "widget": {
+          "title": "平均ティック時間 (MSPT)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum(rate(mc_server_tick_seconds_sum[5m])) / sum(rate(mc_server_tick_seconds_count[5m])) * 1000",
+                  "unitOverride": "ms"
+                },
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "legendTemplate": "MSPT"
+              }
+            ],
+            "yAxis": {
+              "label": "ms",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 0,
+        "yPos": 7,
+        "width": 6,
+        "height": 4,
+        "widget": {
+          "title": "プレイヤー数の推移",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "count(mc_player_list) or vector(0)",
+                  "unitOverride": "1"
+                },
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "legendTemplate": "プレイヤー"
+              }
+            ],
+            "yAxis": {
+              "label": "人",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 6,
+        "yPos": 7,
+        "width": 6,
+        "height": 4,
+        "widget": {
+          "title": "ディメンション別読み込みチャンク",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum by (name) (mc_dimension_chunks_loaded)",
+                  "unitOverride": "1"
+                },
+                "plotType": "LINE",
+                "targetAxis": "Y1"
+              }
+            ],
+            "yAxis": {
+              "label": "チャンク",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 0,
+        "yPos": 11,
+        "width": 4,
+        "height": 4,
+        "widget": {
+          "title": "ホストCPU使用率",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"agent.googleapis.com/cpu/utilization\" resource.type=\"gce_instance\" metric.label.\"cpu_state\"!=\"idle\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_SUM",
+                      "groupByFields": [
+                        "metric.label.\"cpu_number\""
+                      ]
+                    },
+                    "secondaryAggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_MEAN"
+                    }
+                  },
+                  "unitOverride": "%"
+                },
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "legendTemplate": "CPU 使用率"
+              }
+            ],
+            "yAxis": {
+              "label": "%",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 4,
+        "yPos": 11,
+        "width": 4,
+        "height": 4,
+        "widget": {
+          "title": "ホストメモリ使用率",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"agent.googleapis.com/memory/percent_used\" resource.type=\"gce_instance\" metric.label.\"state\"=\"used\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_MEAN"
+                    }
+                  },
+                  "unitOverride": "%"
+                },
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "legendTemplate": "メモリ使用率"
+              }
+            ],
+            "yAxis": {
+              "label": "%",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR"
+            }
+          }
+        }
+      },
+      {
+        "xPos": 8,
+        "yPos": 11,
+        "width": 4,
+        "height": 4,
+        "widget": {
+          "title": "ディスク使用率",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"agent.googleapis.com/disk/percent_used\" resource.type=\"gce_instance\" metric.label.\"state\"=\"used\"",
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "perSeriesAligner": "ALIGN_MEAN",
+                      "crossSeriesReducer": "REDUCE_MEAN",
+                      "groupByFields": [
+                        "metric.label.\"device\""
+                      ]
+                    }
+                  },
+                  "unitOverride": "%"
+                },
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "legendTemplate": "${metric.label.device}"
+              }
+            ],
+            "yAxis": {
+              "label": "%",
+              "scale": "LINEAR"
+            },
+            "chartOptions": {
+              "mode": "COLOR"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
