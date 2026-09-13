@@ -43,6 +43,13 @@ variable "metrics_scrape_interval" {
   description = "Ops Agent が Minecraft の Prometheus エンドポイントを取得する間隔。短くすると Cloud Monitoring の取り込み課金が増える。"
   type        = string
   default     = "60s"
+
+  validation {
+    # Ops Agent の下限は 10 秒。これを下回る値は黙って 10 秒に切り上げられるうえ、
+    # 書式ミスは Ops Agent が起動時に失敗するまで気づけないので apply 時に弾く。
+    condition     = can(regex("^[0-9]+s$", var.metrics_scrape_interval)) && tonumber(trimsuffix(var.metrics_scrape_interval, "s")) >= 10
+    error_message = "metrics_scrape_interval は秒単位の文字列 (例: \"60s\") で、Ops Agent の下限である 10 秒以上を指定してください。"
+  }
 }
 
 variable "purge_legacy_monitoring_data" {

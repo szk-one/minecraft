@@ -106,8 +106,12 @@ fi
 
 mkdir -p "$${OPS_AGENT_CONFIG_DIR}"
 cat <<EOF > "$${OPS_AGENT_CONFIG_FILE}"
-# 既定の hostmetrics / syslog パイプラインはそのまま使い、
-# Minecraft 固有のメトリクスとログのパイプラインだけを追加する。
+# Ops Agent はこのユーザー設定を組み込み設定に「マージ」する。
+# default_pipeline と別 ID のパイプラインを足すだけなら、組み込みの default_pipeline
+# (hostmetrics / syslog) はそのまま動き続ける。止めたい場合だけ default_pipeline を
+# receivers: [] で明示的に上書きする。
+# https://cloud.google.com/monitoring/agent/ops-agent/configuration
+# ここでは Minecraft 固有のメトリクスとログのパイプラインだけを追加する。
 metrics:
   receivers:
     minecraft:

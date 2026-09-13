@@ -25,7 +25,7 @@ VM 上で常時稼働していた **Prometheus / Grafana / node-exporter の 3 �
   これにより `machine_type` のダウンサイジング（調査レポート C）が現実的になる。
   ダウンサイジングは `machine_type` / `mc_memory` 変数で行う（下記参照）。
 - **ディスク IO / 容量**: Prometheus の TSDB 書き込みが 10GB の `pd-standard` から消える。
-  旧データの削除は `purge_legacy_monitoring_data = true` で一度実行する。
+  旧データの削除は任意（[旧データの削除](#旧データの削除)を参照）。
 - **Cloud Monitoring 側の課金**: Ops Agent (`agent.googleapis.com`) と Prometheus 由来の
   メトリクスはいずれも課金対象だが、請求先アカウントあたり月 150 MiB の無料枠がある。
   この規模（VM 1 台 + `mc_*` メトリクスのみ・60 秒間隔）なら無料枠内〜月 $1 未満に収まる見込み。
@@ -68,8 +68,49 @@ Ops Agent が書き込むために VM 用サービスアカウント `mc-server`
    名前指定の `docker rm -f` で掃除される。
 3. Grafana に貯めた履歴は移行されない。必要なら apply 前にエクスポートしておくこと。
 4. 旧データディレクトリ (`/mnt/minecraft/prometheus`, `/mnt/minecraft/grafana`) は
-   既定では残る。ディスクを解放したくなったら `purge_legacy_monitoring_data = true` で
-   一度 apply → VM 再起動し、その後 `false` に戻す。
+   既定では残る。削除方法は下記。
+
+## 旧データの削除
+
+`purge_legacy_monitoring_data` は **起動スクリプトが実行されたときにだけ評価される**。
+`metadata_startup_script` を変更する apply はインスタンスメタデータを書き換えるだけで、
+**起動スクリプトの再実行も VM の再起動もしない**。つまり apply だけでは削除されない。
+
+確実なのは以下のどちらか。
+
+### A. 初回移行と同時に消す（推奨・追加操作なし）
+
+この移行の初回 apply はサービスアカウント追加のため VM を必ず停止・起動する。
+そのタイミングなら起動スクリプトが走るので、最初から `true` にしておけば 1 回で済む。
+
+```hcl
+# deploy/terraform.tfvars
+purge_legacy_monitoring_data = true
+```
+
+apply 後に `false` へ戻しておくこと（残しておくと以降の再起動のたびに `rm -rf` が走る）。
+
+### B. 移行後に消す
+
+apply でメタデータを更新したうえで、VM を明示的に停止・起動する。
+`reset` ではなく `stop` → `start` を使うこと（shutdown script が走り、ワールドが正しく保存される）。
+
+```bash
+terraform -chdir=deploy apply -var 'purge_legacy_monitoring_data=true'
+gcloud compute instances stop mc-server --zone us-central1-a
+gcloud compute instances start mc-server --zone us-central1-a
+```
+
+その後 `purge_legacy_monitoring_data` を `false` に戻して apply する。
+
+### C. SSH で直接消す
+
+Terraform を経由せず消すだけなら、これが最短。
+
+```bash
+gcloud compute ssh mc-server --zone us-central1-a --tunnel-through-iap \
+  --command 'sudo rm -rf /mnt/minecraft/prometheus /mnt/minecraft/grafana /mnt/minecraft/grafana-admin-password /mnt/minecraft/compose/grafana /mnt/minecraft/compose/prometheus.yml'
+```
 
 ## ダッシュボードの中身
 
