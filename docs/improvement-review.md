@@ -10,7 +10,7 @@
 
 | 項目 | 現状 |
 | --- | --- |
-| VM | `n2-standard-4` (4vCPU/16GB)、**legacy preemptible**、`us-central1-a`、24/7 稼働 |
+| VM | `n2-standard-4` (4vCPU/16GB)、**Spot**（[A](#a-最優先-preemptible--spot-vmコスト同額リスクなし即効-対応済み) で legacy preemptible から移行済み）、`us-central1-a`、24/7 稼働 |
 | ディスク | boot 10GB + data 10GB、どちらも `pd-standard` |
 | 同居サービス | Minecraft (NeoForge 1.21.1 / heap 10G) + mc-backup + Ops Agent<br>（Prometheus / node-exporter / Grafana は [E](#e-監視スタックの整理-対応済み) で削除済み） |
 | Mod 管理 | packwiz、**60 件すべて CurseForge ソース**、`side` は 61 件中 56 件が `both` |
@@ -35,9 +35,11 @@
 
 ---
 
-### A. 最優先: `preemptible` → Spot VM（コスト同額・リスクなし・即効）
+### A. 最優先: `preemptible` → Spot VM（コスト同額・リスクなし・即効） 【対応済み】
 
-`google/compute_engine/main.tf:122` がレガシーの preemptible 設定になっている。
+> **対応済み**: `google/compute_engine/main.tf` の `scheduling` ブロックを Spot に切り替えた。
+
+レガシーの preemptible 設定になっていた。
 Spot と料金は同じだが、**preemptible は 24 時間で強制停止**される。Spot にはその上限がない。
 
 ```hcl
@@ -335,13 +337,14 @@ E の対応で `mc_server_external_ip` と `monitoring_dashboard_url` を追加�
 
 | 順 | 内容 | 効果 | 工数 |
 | --- | --- | --- | --- |
-| 1 | **A. Spot 化** | 24h 強制停止の解消 | 小 |
+| 1 | **A. Spot 化** 【対応済み】 | 24h 強制停止の解消 | 小 |
 | 2 | **B. アイドル自動停止** | **コスト 60〜85% 減** | 中 |
 | 3 | **3-1 / 3-2 / 3-3 の修正** | セキュリティ・データ保全 | 小〜中 |
 | 4 | **C. マシンタイプ見直し** | コスト約半額 | 中（Arm 検証） |
 | 5 | **2-(a) packwiz CI 自動化** | パック破損の予防 | 小 |
 | 6 | D / F / G、2-(b) / 2-(c) | 継続改善 | 中 |
 
+> **A（Spot 化）は対応済み**
 > **E（監視スタックの整理）は対応済み** → [監視構成ドキュメント](monitoring.md)
 
 ---

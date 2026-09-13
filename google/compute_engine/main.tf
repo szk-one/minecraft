@@ -118,10 +118,15 @@ resource "google_compute_instance" "mc_server" {
     subnetwork = google_compute_subnetwork.mc_subnet.id
     access_config {}
   }
+  # Spot VM。legacy preemptible と料金は同じだが 24 時間の強制停止上限がない。
+  # SPOT 指定には preemptible = true / automatic_restart = false が必須。
   scheduling {
-    preemptible = true
-    automatic_restart = false
-    on_host_maintenance = "TERMINATE"
+    provisioning_model = "SPOT"
+    preemptible        = true
+    automatic_restart  = false
+    # プリエンプト時は DELETE ではなく STOP。ブートディスクを保持したまま再起動できる。
+    instance_termination_action = "STOP"
+    on_host_maintenance         = "TERMINATE"
   }
 
   # VM 起動時点で Ops Agent が書き込めるよう、IAM 付与を先行させる
