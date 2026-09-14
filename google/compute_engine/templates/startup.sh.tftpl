@@ -18,9 +18,26 @@ DISCORD_WEBHOOK_URL="${discord_webhook_url}"
 MC_MEMORY="${mc_memory}"
 METRICS_SCRAPE_INTERVAL="${metrics_scrape_interval}"
 PURGE_LEGACY_MONITORING_DATA="${purge_legacy_monitoring_data}"
+ENABLE_AUTOSTOP="${enable_autostop}"
+AUTOSTOP_TIMEOUT_EST="${autostop_timeout_est}"
+AUTOSTOP_TIMEOUT_INIT="${autostop_timeout_init}"
+BACKUP_INTERVAL="${backup_interval}"
+PRUNE_BACKUPS_DAYS="${prune_backups_days}"
+CONNECT_ADDRESS="${connect_address}"
 MC_METRICS_PORT="19565"
 OPS_AGENT_CONFIG_DIR="/etc/google-cloud-ops-agent"
 OPS_AGENT_CONFIG_FILE="$${OPS_AGENT_CONFIG_DIR}/config.yaml"
+AUTOSTOP_CHECK_SCRIPT="/usr/local/bin/mc-autostop-check.sh"
+
+if [ "$${ENABLE_AUTOSTOP}" = "true" ]; then
+  MC_ENABLE_AUTOSTOP="TRUE"
+  # AUTOSTOP は「コンテナを終了させる」ことで成立する。unless-stopped のままだと
+  # Docker が即座に再起動してしまい、いつまでも止まらない。
+  MC_RESTART_POLICY="no"
+else
+  MC_ENABLE_AUTOSTOP="FALSE"
+  MC_RESTART_POLICY="unless-stopped"
+fi
 
 log "Starting startup script"
 
@@ -77,19 +94,27 @@ else
   chmod 600 "$${RCON_PASSWORD_FILE}"
 fi
 
-log "Configuring Docker apt repository"
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --yes --dearmor -o /etc/apt/keyrings/docker.gpg
-chmod 0644 /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+# アイドル自動停止を入れると VM の起動/停止が日常的に起きる。毎回 Docker を
+# 入れ直していると起動のたびに数分待たされるので、入っていればスキップする。
+# ブートディスクは stop/start でも preemption でも保持されるため、初回だけ走る。
+if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
+  log "Docker already installed; skipping install"
+else
+  log "Configuring Docker apt repository"
+  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --yes --dearmor -o /etc/apt/keyrings/docker.gpg
+  chmod 0644 /etc/apt/keyrings/docker.gpg
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
 
-log "Installing Docker engine"
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  log "Installing Docker engine"
+  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+fi
+
 systemctl enable docker
-systemctl restart docker
+systemctl start docker
 
 # --- Cloud Monitoring / Cloud Logging -------------------------------------
 # ホストメトリクスとログは Ops Agent が直接 Cloud Monitoring / Cloud Logging に送る。
@@ -159,7 +184,7 @@ services:
   minecraft:
     container_name: minecraft-server
     image: itzg/minecraft-server:java21
-    restart: unless-stopped
+    restart: "$${MC_RESTART_POLICY}"
     ports:
       - "25565:25565"
       # メトリクスは Ops Agent (ホスト) だけが読む。外部には公開しない。
@@ -182,6 +207,12 @@ services:
       ENABLE_RCON: "true"
       RCON_PASSWORD: "$${RCON_PASSWORD}"
       RCON_PORT: "25575"
+      # アイドル自動停止。最後の 1 人が抜けてから EST 秒、誰も来ないまま INIT 秒で
+      # サーバーを正常終了させる。コンテナ終了後は mc-autostop.timer が VM を落とす。
+      # AUTOPAUSE とは排他なので、両方を有効にしてはいけない。
+      ENABLE_AUTOSTOP: "$${MC_ENABLE_AUTOSTOP}"
+      AUTOSTOP_TIMEOUT_EST: "$${AUTOSTOP_TIMEOUT_EST}"
+      AUTOSTOP_TIMEOUT_INIT: "$${AUTOSTOP_TIMEOUT_INIT}"
     volumes:
       - /mnt/minecraft/server:/data
   mc-backup:
@@ -195,6 +226,10 @@ services:
       RCON_HOST: "minecraft"
       RCON_PORT: "25575"
       RCON_PASSWORD: "$${RCON_PASSWORD}"
+      # 24/7 稼働ではなくなるため、既定の 24h 間隔だとセッション中に 1 度も
+      # バックアップが走らない。稼働時間に合わせて短い間隔にしておく。
+      BACKUP_INTERVAL: "$${BACKUP_INTERVAL}"
+      PRUNE_BACKUPS_DAYS: "$${PRUNE_BACKUPS_DAYS}"
     volumes:
       - /mnt/minecraft/server:/data:ro
       - /mnt/minecraft/backups:/backups
@@ -224,22 +259,71 @@ if [ "$${PURGE_LEGACY_MONITORING_DATA}" = "true" ]; then
     "$${COMPOSE_DIR}/grafana"
 fi
 
+# --- アイドル自動停止: コンテナ終了を検知して VM を落とす -------------------
+# ENABLE_AUTOSTOP は Minecraft を止めるだけで VM は課金され続けるので、
+# コンテナの終了を監視して poweroff する systemd timer を組にする。
+cat <<'AUTOSTOP_CHECK_EOF' > "$${AUTOSTOP_CHECK_SCRIPT}"
+${autostop_check_script}
+AUTOSTOP_CHECK_EOF
+chmod 0755 "$${AUTOSTOP_CHECK_SCRIPT}"
+
+cat <<EOF > /etc/systemd/system/mc-autostop.service
+[Unit]
+Description=Minecraft コンテナが終了していたら VM を停止する
+
+[Service]
+Type=oneshot
+ExecStart=$${AUTOSTOP_CHECK_SCRIPT}
+EOF
+
+cat <<'EOF' > /etc/systemd/system/mc-autostop.timer
+[Unit]
+Description=Minecraft のアイドル自動停止チェック
+
+[Timer]
+OnActiveSec=1min
+OnUnitActiveSec=1min
+AccuracySec=10s
+Unit=mc-autostop.service
+
+# [Install] は意図的に持たない。
+# enable して boot 時から動かすと、前回 AUTOSTOP で終了したコンテナを
+# docker compose が起こす前に検知して即 poweroff するループになりうる。
+# この起動スクリプトが compose を立ち上げたあとに start するのが唯一の起動経路。
+EOF
+
+systemctl daemon-reload
+if [ "$${ENABLE_AUTOSTOP}" = "true" ]; then
+  log "Enabling idle auto-stop watchdog"
+  systemctl restart mc-autostop.timer
+else
+  log "Idle auto-stop is disabled; stopping watchdog"
+  systemctl stop mc-autostop.timer || true
+fi
+
 if [ -n "$${DISCORD_WEBHOOK_URL}" ]; then
   log "Preparing Discord notification"
   EXTERNAL_IP="$(curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip" || true)"
-  if [ -z "$${EXTERNAL_IP}" ]; then
-    log "Failed to obtain external IP; skipping Discord notification" >&2
+  INSTANCE_NAME="$(curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name" || true)"
+  if [ -z "$${INSTANCE_NAME}" ]; then
+    INSTANCE_NAME="unknown"
+  fi
+
+  if [ -n "$${CONNECT_ADDRESS}" ]; then
+    # wake proxy 経由。VM の外部 IP は起動のたびに変わるが、プレイヤーの接続先は
+    # 常時稼働のプロキシ側なので変わらない。
+    MESSAGE="$(printf 'Minecraftサーバー (%s) が起動しました。接続先: %s' "$${INSTANCE_NAME}" "$${CONNECT_ADDRESS}")"
+  elif [ -n "$${EXTERNAL_IP}" ]; then
+    MESSAGE="$(printf 'Minecraftサーバー (%s) が起動しました。接続先: %s:25565' "$${INSTANCE_NAME}" "$${EXTERNAL_IP}")"
   else
-    INSTANCE_NAME="$(curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name" || true)"
-    if [ -z "$${INSTANCE_NAME}" ]; then
-      INSTANCE_NAME="unknown"
-    fi
-    PAYLOAD="$(printf '{"content":"Minecraftサーバー (%s) が起動しました。IP: %s"}' "$${INSTANCE_NAME}" "$${EXTERNAL_IP}")"
-    if ! curl -sf -H "Content-Type: application/json" -d "$${PAYLOAD}" "$${DISCORD_WEBHOOK_URL}"; then
-      log "Failed to send Discord notification" >&2
-    else
-      log "Sent Discord notification"
-    fi
+    MESSAGE="$(printf 'Minecraftサーバー (%s) が起動しました。' "$${INSTANCE_NAME}")"
+  fi
+
+  PAYLOAD="$(printf '{"content":"%s"}' "$${MESSAGE}")"
+  if ! curl -sf -H "Content-Type: application/json" -d "$${PAYLOAD}" "$${DISCORD_WEBHOOK_URL}"; then
+    log "Failed to send Discord notification" >&2
+  else
+    log "Sent Discord notification"
   fi
 fi
 
