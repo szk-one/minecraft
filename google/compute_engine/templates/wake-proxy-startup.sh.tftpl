@@ -1,0 +1,130 @@
+#!/bin/bash
+set -euo pipefail
+
+log() {
+  echo "$(date -Iseconds) $*"
+}
+
+PROXY_DIR="/opt/mc-wake-proxy"
+PROXY_SCRIPT="$${PROXY_DIR}/wake-proxy.py"
+PROXY_LOG="/var/log/mc-wake-proxy.log"
+UNIT_FILE="/etc/systemd/system/mc-wake-proxy.service"
+OPS_AGENT_CONFIG_DIR="/etc/google-cloud-ops-agent"
+OPS_AGENT_CONFIG_FILE="$${OPS_AGENT_CONFIG_DIR}/config.yaml"
+
+BACKEND_HOST="${backend_host}"
+BACKEND_PORT="${backend_port}"
+PROJECT_ID="${project_id}"
+ZONE="${zone}"
+MC_INSTANCE="${mc_instance_name}"
+LISTEN_PORT="${listen_port}"
+START_COOLDOWN="${start_cooldown}"
+INSTALL_OPS_AGENT="${install_ops_agent}"
+
+log "Starting wake proxy startup script"
+
+# Debian 12 の GCE イメージには python3 が入っているが、念のため確認する。
+if ! command -v python3 >/dev/null 2>&1; then
+  log "Installing python3"
+  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get install -y python3
+fi
+
+mkdir -p "$${PROXY_DIR}"
+
+cat <<'WAKE_PROXY_PY_EOF' > "$${PROXY_SCRIPT}"
+${wake_proxy_py}
+WAKE_PROXY_PY_EOF
+chmod 0755 "$${PROXY_SCRIPT}"
+
+touch "$${PROXY_LOG}"
+chmod 0644 "$${PROXY_LOG}"
+
+cat <<EOF > /etc/logrotate.d/mc-wake-proxy
+$${PROXY_LOG} {
+  weekly
+  rotate 4
+  compress
+  missingok
+  notifempty
+  # systemd が開いたままの fd に書き続けるため、truncate 方式で回す
+  copytruncate
+}
+EOF
+
+cat <<EOF > "$${UNIT_FILE}"
+[Unit]
+Description=Minecraft wake proxy (停止中の Minecraft VM を参加操作で起動する)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 専用の一時ユーザーで動かす。25565 は特権ポートではないので root は不要。
+DynamicUser=yes
+ExecStart=/usr/bin/python3 $${PROXY_SCRIPT}
+Environment=PYTHONUNBUFFERED=1
+Environment=WAKE_PROXY_BACKEND_HOST=$${BACKEND_HOST}
+Environment=WAKE_PROXY_BACKEND_PORT=$${BACKEND_PORT}
+Environment=WAKE_PROXY_LISTEN_PORT=$${LISTEN_PORT}
+Environment=WAKE_PROXY_PROJECT_ID=$${PROJECT_ID}
+Environment=WAKE_PROXY_ZONE=$${ZONE}
+Environment=WAKE_PROXY_INSTANCE=$${MC_INSTANCE}
+Environment=WAKE_PROXY_START_COOLDOWN=$${START_COOLDOWN}
+# Ops Agent に拾わせるためファイルに出す (journald だけだと Cloud Logging に乗らない)
+StandardOutput=append:$${PROXY_LOG}
+StandardError=inherit
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+if [ "$${INSTALL_OPS_AGENT}" = "true" ]; then
+  if ! dpkg -s google-cloud-ops-agent >/dev/null 2>&1; then
+    log "Installing Google Cloud Ops Agent"
+    curl -fsSL https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh -o /tmp/add-google-cloud-ops-agent-repo.sh
+    bash /tmp/add-google-cloud-ops-agent-repo.sh --also-install
+    rm -f /tmp/add-google-cloud-ops-agent-repo.sh
+  else
+    log "Ops Agent already installed; skipping install"
+  fi
+
+  mkdir -p "$${OPS_AGENT_CONFIG_DIR}"
+  cat <<EOF > "$${OPS_AGENT_CONFIG_FILE}"
+# wake proxy のログだけを Cloud Logging に送る。
+# ホストメトリクス (hostmetrics) は Cloud Monitoring の取り込み課金が増えるだけで
+# この VM では見る価値が薄いので、既定パイプラインを空にして止める。
+logging:
+  receivers:
+    wake_proxy:
+      type: files
+      include_paths:
+        - $${PROXY_LOG}
+  service:
+    pipelines:
+      wake_proxy:
+        receivers: [wake_proxy]
+metrics:
+  service:
+    pipelines:
+      default_pipeline:
+        receivers: []
+EOF
+
+  log "Restarting Ops Agent"
+  systemctl enable google-cloud-ops-agent
+  systemctl restart google-cloud-ops-agent
+fi
+
+log "Starting mc-wake-proxy service"
+systemctl daemon-reload
+systemctl enable mc-wake-proxy.service
+systemctl restart mc-wake-proxy.service
+
+log "Wake proxy startup script completed"

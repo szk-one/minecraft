@@ -57,3 +57,73 @@ variable "purge_legacy_monitoring_data" {
   type        = bool
   default     = false
 }
+
+variable "enable_autostop" {
+  description = "誰も接続していないときに Minecraft を終了し、VM ごと停止するか。コスト削減の主役。"
+  type        = bool
+  default     = true
+}
+
+variable "autostop_timeout_est" {
+  description = "最後のプレイヤーが退出してからサーバーを終了するまでの秒数 (itzg の AUTOSTOP_TIMEOUT_EST)。"
+  type        = number
+  default     = 1200
+
+  validation {
+    condition     = var.autostop_timeout_est >= 60
+    error_message = "autostop_timeout_est は 60 秒以上にしてください。短すぎると再接続のたびに停止・起動を繰り返します。"
+  }
+}
+
+variable "autostop_timeout_init" {
+  description = "サーバー起動後、誰も接続しないまま終了するまでの秒数 (itzg の AUTOSTOP_TIMEOUT_INIT)。Mod の読み込み時間より十分長くすること。"
+  type        = number
+  default     = 900
+
+  validation {
+    condition     = var.autostop_timeout_init >= 300
+    error_message = "autostop_timeout_init は 300 秒以上にしてください。Mod の読み込み中に停止してしまいます。"
+  }
+}
+
+variable "backup_interval" {
+  description = "mc-backup のバックアップ間隔。24/7 稼働ではなくなるため、既定の 24h だとセッション中に一度も走らない。"
+  type        = string
+  default     = "2h"
+}
+
+variable "prune_backups_days" {
+  description = "バックアップを保持する日数。10GB のデータディスクを溢れさせないために明示する。"
+  type        = number
+  default     = 7
+}
+
+variable "enable_wake_proxy" {
+  description = <<-EOT
+    常時稼働の待ち受けプロキシ VM を建てるか。
+    停止中の Minecraft VM の代わりに 25565 を受け、参加操作を合図に VM を起動する。
+    true の場合、プレイヤーの接続先は Minecraft VM ではなくこのプロキシの外部 IP
+    (terraform output minecraft_connect_address) になり、Minecraft VM 側の 25565 は
+    サブネット内からのみ開放される。
+  EOT
+  type        = bool
+  default     = true
+}
+
+variable "wake_proxy_machine_type" {
+  description = "待ち受けプロキシのマシンタイプ。既定の e2-micro は us-central1/us-west1/us-east1 で無料枠の対象。"
+  type        = string
+  default     = "e2-micro"
+}
+
+variable "wake_proxy_start_cooldown" {
+  description = "待ち受けプロキシが VM 起動を要求してから、次の起動要求を受け付けるまでの秒数。"
+  type        = number
+  default     = 120
+}
+
+variable "wake_proxy_install_ops_agent" {
+  description = "待ち受けプロキシに Ops Agent を入れて、起動要求のログを Cloud Logging に送るか。ホストメトリクスは送らない。"
+  type        = bool
+  default     = true
+}

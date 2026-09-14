@@ -10,8 +10,8 @@
 
 | 項目 | 現状 |
 | --- | --- |
-| VM | `n2-standard-4` (4vCPU/16GB)、**Spot**（[A](#a-最優先-preemptible--spot-vmコスト同額リスクなし即効-対応済み) で legacy preemptible から移行済み）、`us-central1-a`、24/7 稼働 |
-| ディスク | boot 10GB + data 10GB、どちらも `pd-standard` |
+| VM | `n2-standard-4` (4vCPU/16GB)、**Spot**（[A](#a-最優先-preemptible--spot-vmコスト同額リスクなし即効-対応済み) で legacy preemptible から移行済み）、`us-central1-a`、**アイドル自動停止**（B で対応済み） |
+| ディスク | boot 10GB + data 10GB、どちらも `pd-standard`（+ wake proxy の boot 10GB） |
 | 同居サービス | Minecraft (NeoForge 1.21.1 / heap 10G) + mc-backup + Ops Agent<br>（Prometheus / node-exporter / Grafana は [E](#e-監視スタックの整理-対応済み) で削除済み） |
 | Mod 管理 | packwiz、**60 件すべて CurseForge ソース**、`side` は 61 件中 56 件が `both` |
 | CI | `packwiz/` を GitHub Pages にそのままアップロードするのみ（`packwiz refresh` なし） |
@@ -56,7 +56,10 @@ scheduling {
 
 ---
 
-### B. 最大の削減幅: アイドル時の自動停止（削減率 60〜85%）
+### B. 最大の削減幅: アイドル時の自動停止（削減率 60〜85%）【対応済み】
+
+> **対応済み**: itzg の Auto-Stop + `mc-autostop.timer`（停止側）と、無料枠 e2-micro 上の
+> wake proxy（起動側）を実装した。詳細は [アイドル自動停止ドキュメント](autostop.md) を参照。
 
 現在は誰も接続していなくても 24/7 課金されている。1 日 4 時間プレイなら compute は **$48 → 約 $8/月**。
 
@@ -88,7 +91,20 @@ AUTOSTOP_TIMEOUT_INIT: "900"   # 起動後15分誰も来なければ停止
 | --- | --- |
 | Discord bot | 既に Discord 通知を使っているので導線が自然 |
 | `gcloud compute instances start` | 最も単純。手動 |
-| **無料枠 e2-micro に接続待ち受けプロキシ** | プレイヤーは「繋ぐだけ」。体験は最良 |
+| **無料枠 e2-micro に接続待ち受けプロキシ** | プレイヤーは「繋ぐだけ」。体験は最良 → **これを採用** |
+
+#### 実装で分かった追加事項
+
+- **プレイヤーの接続先が固定される。** wake proxy が常時稼働して 25565 を受けるため、
+  Minecraft VM の外部 IP が起動のたびに変わっても影響しない。
+  Minecraft VM の 25565 はサブネット内（= プロキシ）からのみに絞った。
+- **3-7（起動のたびに Docker 再インストール）を先に潰す必要があった。**
+  停止・起動が日常的に起きる構成では、毎回数分の遅延がそのまま体験の悪化になる。あわせて対応済み。
+- **mc-backup の間隔を縮める必要があった。** 既定の 24 時間間隔では、1 回のプレイ
+  セッション中に一度もバックアップが走らない。`backup_interval` を 2h にし、
+  `PRUNE_BACKUPS_DAYS` も明示した。
+- **Spot のプリエンプション復帰も自動化された。** プリエンプトで停止した VM も、
+  次に誰かが参加しようとした時点で wake proxy が起こす。
 
 ---
 
@@ -302,11 +318,13 @@ itzg が 1.21.1 の最新を拾う。**クライアントとサーバーで NeoF
 
 ローカル state + gitignore。紛失すると全リソースが孤児になる。GCS backend 化を推奨（月数セント）。
 
-#### 3-7. 起動のたびに Docker を再インストール
+#### 3-7. 起動のたびに Docker を再インストール 【解消済み】
 
-`google/compute_engine/templates/startup.sh.tftpl:80-92`。
-Spot は再起動が頻繁なので、毎回数分の起動遅延になる。
-`command -v docker` でガードするか、Packer でカスタムイメージを焼く。
+> **対応済み**: B のアイドル自動停止で停止・起動が日常的に起きるようになったため、
+> `command -v docker` でガードして入っていればスキップするようにした。
+
+Spot は再起動が頻繁なので、毎回数分の起動遅延になっていた。
+さらに詰めるなら Packer でカスタムイメージを焼く手もある（Mod の初回ダウンロードも含められる）。
 
 #### 3-8. スナップショットスケジュールなし
 
@@ -338,14 +356,17 @@ E の対応で `mc_server_external_ip` と `monitoring_dashboard_url` を追加�
 | 順 | 内容 | 効果 | 工数 |
 | --- | --- | --- | --- |
 | 1 | **A. Spot 化** 【対応済み】 | 24h 強制停止の解消 | 小 |
-| 2 | **B. アイドル自動停止** | **コスト 60〜85% 減** | 中 |
-| 3 | **3-1 / 3-2 / 3-3 の修正** | セキュリティ・データ保全 | 小〜中 |
+| 2 | **B. アイドル自動停止** 【対応済み】 | **コスト 60〜85% 減** | 中 |
+| 3 | **3-2 / 3-3 の修正** | セキュリティ・データ保全 | 小〜中 |
 | 4 | **C. マシンタイプ見直し** | コスト約半額 | 中（Arm 検証） |
 | 5 | **2-(a) packwiz CI 自動化** | パック破損の予防 | 小 |
 | 6 | D / F / G、2-(b) / 2-(c) | 継続改善 | 中 |
 
 > **A（Spot 化）は対応済み**
+> **B（アイドル自動停止）は対応済み** → [アイドル自動停止ドキュメント](autostop.md)
 > **E（監視スタックの整理）は対応済み** → [監視構成ドキュメント](monitoring.md)
+> **3-1（Prometheus/Grafana の全開放）は E の対応で解消済み**
+> **3-7（起動のたびに Docker 再インストール）は B の対応で解消済み**
 
 ---
 
